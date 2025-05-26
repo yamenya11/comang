@@ -5,6 +5,7 @@ import org.antlr.v4.runtime.*;
 import antlr.gen.*; // تأكد من وجود ملفات ANTLR الخاصة بك
 import seminticerror.ClassSymbolTable;
 import seminticerror.ErrorHandler;
+import seminticerror.Import;
 
 public class AngularHtmlParser {
     public Node parseHtmlTemplate(String htmlContent) {
@@ -16,7 +17,8 @@ public class AngularHtmlParser {
             SymbolTable symbolTable = new SymbolTable();
             ClassSymbolTable classSymbolTable = new ClassSymbolTable();
             ErrorHandler errorHandler = new ErrorHandler();
-            return (Node) new AngularASTBuilder(symbolTable, classSymbolTable, errorHandler).visit(parser.htmlContent());
+            Import importSymbols = new Import();
+            return (Node) new AngularASTBuilder(symbolTable, classSymbolTable, errorHandler,importSymbols).visit(parser.htmlContent());
         } catch (Exception e) {
             System.err.println("Error parsing HTML content: " + e.getMessage());
             return null;

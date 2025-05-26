@@ -1,4 +1,4 @@
-// Generated from C:/Users/Yamen/IdeaProjects/Finalangular/src/antlr/AngularParser.g4 by ANTLR 4.13.2
+// Generated from D:/comang/src/antlr/AngularParser.g4 by ANTLR 4.13.2
 package antlr;
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -281,37 +281,37 @@ public class AngularParserBaseListener implements AngularParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterELEMENTLISTLABEL(AngularParser.ELEMENTLISTLABELContext ctx) { }
+	@Override public void enterElementList(AngularParser.ElementListContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitELEMENTLISTLABEL(AngularParser.ELEMENTLISTLABELContext ctx) { }
+	@Override public void exitElementList(AngularParser.ElementListContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterELEMENTLABEL(AngularParser.ELEMENTLABELContext ctx) { }
+	@Override public void enterElement(AngularParser.ElementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitELEMENTLABEL(AngularParser.ELEMENTLABELContext ctx) { }
+	@Override public void exitElement(AngularParser.ElementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterPAIRLABEL(AngularParser.PAIRLABELContext ctx) { }
+	@Override public void enterPair(AngularParser.PairContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitPAIRLABEL(AngularParser.PAIRLABELContext ctx) { }
+	@Override public void exitPair(AngularParser.PairContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -425,145 +425,13 @@ public class AngularParserBaseListener implements AngularParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterPROPERTYLABEL(AngularParser.PROPERTYLABELContext ctx) { }
+	@Override public void enterClassBodyLabel(AngularParser.ClassBodyLabelContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitPROPERTYLABEL(AngularParser.PROPERTYLABELContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterMETHODLABEL(AngularParser.METHODLABELContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitMETHODLABEL(AngularParser.METHODLABELContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterCONSTRUCTURELABEL(AngularParser.CONSTRUCTURELABELContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitCONSTRUCTURELABEL(AngularParser.CONSTRUCTURELABELContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterSTATMENTLABEL(AngularParser.STATMENTLABELContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitSTATMENTLABEL(AngularParser.STATMENTLABELContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterDECTORLABEL(AngularParser.DECTORLABELContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitDECTORLABEL(AngularParser.DECTORLABELContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterNGOMINITLABEL(AngularParser.NGOMINITLABELContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitNGOMINITLABEL(AngularParser.NGOMINITLABELContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterSELECTPRODUTLABEL(AngularParser.SELECTPRODUTLABELContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitSELECTPRODUTLABEL(AngularParser.SELECTPRODUTLABELContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterONBUTTONLABEL(AngularParser.ONBUTTONLABELContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitONBUTTONLABEL(AngularParser.ONBUTTONLABELContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterGETPRODUCTLABEL(AngularParser.GETPRODUCTLABELContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitGETPRODUCTLABEL(AngularParser.GETPRODUCTLABELContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterPRODUCTLABEL(AngularParser.PRODUCTLABELContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitPRODUCTLABEL(AngularParser.PRODUCTLABELContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterLAMBDALABEL(AngularParser.LAMBDALABELContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitLAMBDALABEL(AngularParser.LAMBDALABELContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterPROPERTYAACCESSLABEL(AngularParser.PROPERTYAACCESSLABELContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitPROPERTYAACCESSLABEL(AngularParser.PROPERTYAACCESSLABELContext ctx) { }
+	@Override public void exitClassBodyLabel(AngularParser.ClassBodyLabelContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -641,13 +509,13 @@ public class AngularParserBaseListener implements AngularParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterCONSTRACTUR(AngularParser.CONSTRACTURContext ctx) { }
+	@Override public void enterConstructor(AngularParser.ConstructorContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitCONSTRACTUR(AngularParser.CONSTRACTURContext ctx) { }
+	@Override public void exitConstructor(AngularParser.ConstructorContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -761,6 +629,42 @@ public class AngularParserBaseListener implements AngularParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterFunctionDeclaration(AngularParser.FunctionDeclarationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFunctionDeclaration(AngularParser.FunctionDeclarationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFunctionB(AngularParser.FunctionBContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFunctionB(AngularParser.FunctionBContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterPropertystatment(AngularParser.PropertystatmentContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPropertystatment(AngularParser.PropertystatmentContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterMethodDeclaration(AngularParser.MethodDeclarationContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -773,13 +677,13 @@ public class AngularParserBaseListener implements AngularParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterPARAMETERLABEL(AngularParser.PARAMETERLABELContext ctx) { }
+	@Override public void enterParameter(AngularParser.ParameterContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitPARAMETERLABEL(AngularParser.PARAMETERLABELContext ctx) { }
+	@Override public void exitParameter(AngularParser.ParameterContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -1097,13 +1001,13 @@ public class AngularParserBaseListener implements AngularParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSelectProduct(AngularParser.SelectProductContext ctx) { }
+	@Override public void enterSELECTPRODUCTLABEL(AngularParser.SELECTPRODUCTLABELContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitSelectProduct(AngularParser.SelectProductContext ctx) { }
+	@Override public void exitSELECTPRODUCTLABEL(AngularParser.SELECTPRODUCTLABELContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

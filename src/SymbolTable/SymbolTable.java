@@ -4,10 +4,19 @@ import java.util.*;
 
 public class SymbolTable {
     private Map<String, SymbolEntry> symbols = new HashMap<>();
+    private Set<String> importedSources = new HashSet<>();
     private String currentScope = "global";
 
     public void addSymbol(SymbolEntry entry) {
         symbols.put(entry.getName(), entry);
+    }
+
+    public boolean isImported(String source) {
+        return importedSources.contains(source);
+    }
+
+    public void addImported(String source) {
+        importedSources.add(source);
     }
 
     public SymbolEntry getSymbol(String name) {
