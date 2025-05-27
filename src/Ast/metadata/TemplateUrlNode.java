@@ -3,10 +3,11 @@ package Ast.metadata;
 import Ast.Node;
 
 public class TemplateUrlNode extends MetadataEntryNode {
+    String key;
     private String value;
 
     public TemplateUrlNode(String identifier, String value) {
-        super(identifier);
+       this.key=identifier;
         this.value = value;
     }
 

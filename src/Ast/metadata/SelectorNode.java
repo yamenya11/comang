@@ -3,10 +3,11 @@ package Ast.metadata;
 import Ast.Node;
 
 public class SelectorNode extends MetadataEntryNode{
+    String key;
     private String value;
 
-    public SelectorNode(String identifier, String value) {
-        super(identifier);
+    public SelectorNode(String key, String value) {
+        this.key=key;
         this.value = value;
     }
 

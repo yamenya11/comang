@@ -22,7 +22,7 @@ ELSE : 'else';
 AT : '@';
 PROVIDEDIN: 'providedIn';
 SELECTOR : 'selector';
-//TEMPLATE:'template';
+TEMPLATE:'template';
 TEMPLATEURL: 'templateUrl';
 STYLEURLS : 'styleUrls';
 ANY : 'any';

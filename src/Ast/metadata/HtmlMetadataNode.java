@@ -6,10 +6,11 @@ import java.util.List;
 
 // HtmlMetadataNode يجب أن يرث من MetadataEntryNode
 public class HtmlMetadataNode extends MetadataEntryNode {
+    String key;
     private List<HtmlElementNode> body;
 
     public HtmlMetadataNode(String key, List<HtmlElementNode> body) {
-        super(key);  // استخدام الـ constructor الأب
+        this.key=key;
         this.body = body;
     }
 
