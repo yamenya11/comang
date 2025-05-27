@@ -39,7 +39,8 @@ String filePath="C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\app\\product
             SymbolTable symbolTable = new SymbolTable();
             ClassSymbolTable classSymbolTable = new ClassSymbolTable();
             ErrorHandler errorHandler = new ErrorHandler();
-            AngularASTBuilder builder = new AngularASTBuilder(symbolTable, classSymbolTable, errorHandler);            Node ast = builder.visit(parser.program());
+            AngularASTBuilder builder = new AngularASTBuilder(symbolTable, classSymbolTable, errorHandler);
+            Node ast = builder.visit(parser.program());
 
             System.out.println("AST Constructed Successfully:");
             System.out.println(ast);
