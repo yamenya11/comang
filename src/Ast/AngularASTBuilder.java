@@ -339,7 +339,6 @@
         }
 
 
-
         @Override
         public Node visitConstructor(AngularParser.ConstructorContext ctx) {
             String constructorName = ctx.CONSTRUCTOR().getText();
@@ -347,10 +346,19 @@
             List<Node> parameters = new ArrayList<>();
             if (ctx.parameter() != null) {
                 for (var parameterCtx : ctx.parameter()) {
-                    // Parse each parameter
-                    String modifier = parameterCtx.modifiers().getText(); // مثال: private
+                    String modifier = parameterCtx.modifiers().getText();
                     String name = parameterCtx.IDENTIFIER().getText();
                     String type = parameterCtx.value().getText();
+
+
+                    if (!isTypeImported(type)) {
+                        errorHandler.reportSemanticError(
+                                "The class or service '" + type + "' is used without importing it.",
+                                parameterCtx.start
+                        );
+                    }
+
+
                     parameters.add(new ParameterNode(name, type, modifier));
                 }
             }
@@ -379,7 +387,23 @@
                     symbolTable.getCurrentScope()
             ));
 
-            return new ConstructorNode(constructorName, parameters, statements);   }
+            return new ConstructorNode(constructorName, parameters, statements);
+        }
+
+
+        private boolean isTypeImported(String type) {
+            for (SymbolEntry entry : importSymbols.getAllSymbols()) {
+                String importedItems = entry.getName(); // مثل: "ProductService, HttpClient"
+                String[] items = importedItems.split(",");
+                for (String item : items) {
+                    if (item.trim().equals(type)) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
 
 
         @Override

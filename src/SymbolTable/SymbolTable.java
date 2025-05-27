@@ -19,6 +19,7 @@ public class SymbolTable {
         importedSources.add(source);
     }
 
+
     public SymbolEntry getSymbol(String name) {
         return symbols.get(name);
     }
@@ -34,6 +35,8 @@ public class SymbolTable {
     public Collection<SymbolEntry> getAllSymbols() {
         return symbols.values();
     }
+
+
 
     public void printSymbols() {
         System.out.println("Symbol Table:");
