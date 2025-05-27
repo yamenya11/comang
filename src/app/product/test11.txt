@@ -5,9 +5,12 @@ import { OnInit } from "angular/core";
 
 
 @Component({
-  selector: 'app-root',
+  selector: 'app_root',
+  // selector: '99hello',
+   //selector: 'app-root',
+
   template: `<div *ngFor="let product of products">
-             //    <app-user>{{ product.name }}</h2>
+               <h>{{ product.name }}</p>
                  <p>السعر: {{ product.price }} ل س</p>
                  <button (click)="selectProduct(product)">عرض التفاصيل</button>
                   <img [src]="product.image" alt="{{ product.name }}" />
@@ -23,8 +26,8 @@ import { OnInit } from "angular/core";
 
 
 export class AppComponent  {
-let myVar: string = "Hello";     // ✅ تعريف أول
-  let myVar: number = 5;
+let myVar: string = "Hello";
+
 constructor(private productService: ProductService) {
     this.products = this.productService.getProducts();
   }
@@ -41,6 +44,6 @@ constructor(private productService: ProductService) {
     this.selectedProduct = product;
   }
 
-}export class AppComponent {    // ❌ تكرار الكلاس
- let myVar: string = "Hello";     // ✅ تعريف أول
+}export class AppComponent {
+ let myVar: string = "Hello";
  }
