@@ -4,9 +4,10 @@ import SymbolTable.SymbolTable;
 import antlr.gen.AngularLexer;
 import antlr.gen.AngularParser;
 import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.tree.*;
 import seminticerror.ClassSymbolTable;
 import seminticerror.ErrorHandler;
+import seminticerror.Import;
+import seminticerror.SelectorSymbolTable;
 
 import java.io.IOException;
 
@@ -23,15 +24,15 @@ public class Main {
     public static void main(String[] args) {
 
 
-    // String filePath = "C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\app\\product\\product.component.ts";
-   // String filePath =  "C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\app\\product\\product.service.ts";
+        // String filePath = "C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\app\\product\\product.component.ts";
+        // String filePath =  "C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\app\\product\\product.service.ts";
         // String filePath =  "C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\antlr\\sample.angular";
-String filePath="C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\app\\product\\test11.txt";
-  // String filePath="C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\app\\product\\test33.txt";
-      //String filePath="C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\antlr\\test.angular";
-      //  String filePath =  "C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\antlr\\test.angular";
+        String filePath="C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\app\\product\\test11.txt";
+        // String filePath="C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\app\\product\\test33.txt";
+        //String filePath="C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\antlr\\test.angular";
+        //  String filePath =  "C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\antlr\\test.angular";
 
-    // String filePath="C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\antlr\\product-display.component.txt";
+        // String filePath="C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\antlr\\product-display.component.txt";
         try {
             CharStream source = CharStreams.fromFileName(filePath);
             AngularLexer lexer = new AngularLexer(source);
@@ -39,7 +40,9 @@ String filePath="C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\app\\product
             SymbolTable symbolTable = new SymbolTable();
             ClassSymbolTable classSymbolTable = new ClassSymbolTable();
             ErrorHandler errorHandler = new ErrorHandler();
-            AngularASTBuilder builder = new AngularASTBuilder(symbolTable, classSymbolTable, errorHandler);
+            SelectorSymbolTable selectorSymbolTable=new SelectorSymbolTable();
+            Import importsymboltable=new Import();
+            AngularASTBuilder builder = new AngularASTBuilder(symbolTable, selectorSymbolTable, classSymbolTable, errorHandler,importsymboltable);
             Node ast = builder.visit(parser.program());
 
             System.out.println("AST Constructed Successfully:");
@@ -47,8 +50,8 @@ String filePath="C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\app\\product
 
 
 
-           System.out.println("\nSymbol Table:");
-           symbolTable.printSymbols();
+            System.out.println("\nSymbol Table:");
+            symbolTable.printSymbols();
 
             if (errorHandler.hasErrors()) {
                 errorHandler.writeErrorsToFile("C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\app\\product\\semantic_errors.txt");
@@ -62,6 +65,3 @@ String filePath="C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\app\\product
             System.out.println("Error: " + e.getMessage());
         }
     }    }
-
-
-
