@@ -27,7 +27,7 @@ public class Main {
         // String filePath = "C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\app\\product\\product.component.ts";
         // String filePath =  "C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\app\\product\\product.service.ts";
         // String filePath =  "C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\antlr\\sample.angular";
-        String filePath="C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\app\\product\\test11.txt";
+        String filePath="D:\\comang\\src\\app\\product\\test11.txt";
         // String filePath="C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\app\\product\\test33.txt";
         //String filePath="C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\antlr\\test.angular";
         //  String filePath =  "C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\antlr\\test.angular";
@@ -54,7 +54,7 @@ public class Main {
             symbolTable.printSymbols();
 
             if (errorHandler.hasErrors()) {
-                errorHandler.writeErrorsToFile("C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\app\\product\\semantic_errors.txt");
+                errorHandler.writeErrorsToFile("D:\\comang\\src\\app\\product\\semantic_errors.txt");
                 System.out.println("Semantic errors saved to semantic_errors.txt");
             } else {
                 System.out.println("No semantic errors found.");
