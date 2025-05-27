@@ -103,6 +103,19 @@ public interface AngularParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitTAMPLATEURLLABEL(AngularParser.TAMPLATEURLLABELContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code PROVIDINLABEL}
+	 * labeled alternative in {@link AngularParser#metadataEntry}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPROVIDINLABEL(AngularParser.PROVIDINLABELContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AngularParser#providin}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitProvidin(AngularParser.ProvidinContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link AngularParser#templateurl}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

@@ -164,6 +164,28 @@ public interface AngularParserListener extends ParseTreeListener {
 	 */
 	void exitTAMPLATEURLLABEL(AngularParser.TAMPLATEURLLABELContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code PROVIDINLABEL}
+	 * labeled alternative in {@link AngularParser#metadataEntry}.
+	 * @param ctx the parse tree
+	 */
+	void enterPROVIDINLABEL(AngularParser.PROVIDINLABELContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code PROVIDINLABEL}
+	 * labeled alternative in {@link AngularParser#metadataEntry}.
+	 * @param ctx the parse tree
+	 */
+	void exitPROVIDINLABEL(AngularParser.PROVIDINLABELContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link AngularParser#providin}.
+	 * @param ctx the parse tree
+	 */
+	void enterProvidin(AngularParser.ProvidinContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link AngularParser#providin}.
+	 * @param ctx the parse tree
+	 */
+	void exitProvidin(AngularParser.ProvidinContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link AngularParser#templateurl}.
 	 * @param ctx the parse tree
 	 */
