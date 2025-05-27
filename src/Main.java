@@ -4,9 +4,10 @@ import SymbolTable.SymbolTable;
 import antlr.gen.AngularLexer;
 import antlr.gen.AngularParser;
 import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.tree.*;
 import seminticerror.ClassSymbolTable;
 import seminticerror.ErrorHandler;
+import seminticerror.Import;
+import seminticerror.SelectorSymbolTable;
 
 import java.io.IOException;
 
@@ -39,7 +40,10 @@ String filePath="C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\app\\product
             SymbolTable symbolTable = new SymbolTable();
             ClassSymbolTable classSymbolTable = new ClassSymbolTable();
             ErrorHandler errorHandler = new ErrorHandler();
-            AngularASTBuilder builder = new AngularASTBuilder(symbolTable, classSymbolTable, errorHandler);            Node ast = builder.visit(parser.program());
+            SelectorSymbolTable selectorSymbolTable=new SelectorSymbolTable();
+            Import importsymboltable=new Import();
+            AngularASTBuilder builder = new AngularASTBuilder(symbolTable, selectorSymbolTable, classSymbolTable, errorHandler,importsymboltable);
+            Node ast = builder.visit(parser.program());
 
             System.out.println("AST Constructed Successfully:");
             System.out.println(ast);

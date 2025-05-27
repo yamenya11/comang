@@ -19,17 +19,21 @@ import Ast.statements.*;
 import antlr.gen.*;
 import seminticerror.ClassSymbolTable;
 import seminticerror.ErrorHandler;
+import seminticerror.Import;
+import seminticerror.SelectorSymbolTable;
 
 import java.util.*;
 //import org.antlr.runtime.tree.ParseTree;
 
 public class AngularASTBuilder extends AngularParserBaseVisitor<Node> {
     private final SymbolTable symbolTable;
-    public AngularASTBuilder(SymbolTable symbolTable, ClassSymbolTable classSymbolTable, ErrorHandler errorHandler) {
+    public AngularASTBuilder(SymbolTable symbolTable, SelectorSymbolTable selectorSymbolTable, ClassSymbolTable classSymbolTable, ErrorHandler errorHandler, Import importSymbols) {
         this.symbolTable = symbolTable;
         this.classSymbolTable = classSymbolTable;
         this.errorHandler = errorHandler;
+        this.selectorSymbolTable = new SelectorSymbolTable();
     }
+    private final SelectorSymbolTable selectorSymbolTable;
     private final ClassSymbolTable classSymbolTable ;
     private final ErrorHandler errorHandler;
     /*@Override
@@ -168,7 +172,7 @@ List<KeyImportNode>app=new ArrayList<>();
 
     @Override
     public Node visitBasicMetadata(AngularParser.BasicMetadataContext ctx) {
-        String key = ctx.IDENTIFIER().getText();
+        String key = ctx.TEMPLATE().getText();
         String value = ctx.STRING().getText().replaceAll("^\"|\"$", "");
         String scope = symbolTable.getCurrentScope();
         symbolTable.addSymbol(new SymbolEntry(key, SymbolType.METADATA, value, scope));
@@ -180,7 +184,7 @@ List<KeyImportNode>app=new ArrayList<>();
 
     @Override
     public Node visitHtmlMetadata(AngularParser.HtmlMetadataContext ctx) {
-        String key = ctx.IDENTIFIER().getText();
+        String key = ctx.TEMPLATE().getText();
         List<HtmlElementNode> htmlChildren = new ArrayList<>();
         for (var htmlElemCtx : ctx.htmlElement()) {
             htmlChildren.add((HtmlElementNode) visit(htmlElemCtx));
@@ -223,9 +227,21 @@ List<KeyImportNode>app=new ArrayList<>();
     @Override
     public Node visitSelector(AngularParser.SelectorContext ctx) {
         String key = ctx.SELECTOR().getText();
-        String value = ctx.STRING().getText().replaceAll("^\"|\"$", "");
+        String value = ctx.STRING().getText().replaceAll("^['\"]|['\"]$", "");
+
         String scope = symbolTable.getCurrentScope();
-        symbolTable.addSymbol(new SymbolEntry(key, SymbolType.METADATA, value, scope));
+
+        // التحقق من صحة selector
+        if (!value.matches("^[a-zA-Z_][a-zA-Z0-9_-]*$")) {
+            errorHandler.reportSemanticError("Invalid selector value: '" + value + "'. Selector must start with a letter or underscore and contain only alphanumeric characters, underscores or hyphens.", ctx.start);
+        } else if (selectorSymbolTable.symbolExists(value)) {
+            errorHandler.reportSemanticError("Duplicate selector value: '" + value + "'", ctx.start);
+        }
+
+        SymbolEntry entry = new SymbolEntry(key, SymbolType.METADATA, value, scope);
+        selectorSymbolTable.addSymbol(entry);
+        symbolTable.addSymbol(entry);
+
         return new SelectorNode(key, value);
     }
 
