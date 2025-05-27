@@ -5,15 +5,21 @@ import SymbolTable.SymbolEntry;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SelectoeSymbolTable {
-    private Map<String, SymbolEntry> classSymbols = new HashMap<>();
-    public boolean symbolExists(String name) {
-        return classSymbols.containsKey(name);
+public class SelectorSymbolTable {
+    private Map<String, SymbolEntry> selectorsByValue = new HashMap<>();
+
+    // تحقق إذا كانت القيمة موجودة مسبقًا (أي مكررة)
+    public boolean symbolExists(String selectorValue) {
+        return selectorsByValue.containsKey(selectorValue);
     }
+
+    // أضف قيمة selector مع بياناتها (SymbolEntry)
     public void addSymbol(SymbolEntry entry) {
-        classSymbols.put(entry.getName(), entry);
+        // هنا نفترض أن القيمة مخزنة في entry.getValue()
+        selectorsByValue.put(entry.getValue(), entry);
     }
-    public SymbolEntry getSymbol(String name) {
-        return classSymbols.get(name);
+
+    public SymbolEntry getSymbol(String selectorValue) {
+        return selectorsByValue.get(selectorValue);
     }
 }

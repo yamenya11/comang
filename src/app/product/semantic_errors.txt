@@ -1,2 +1,6 @@
+<<<<<<< HEAD
 Semantic Error at line 4, column 0: Duplicate import detected: angular/core
 Semantic Error at line 44, column 1: Duplicate class definition: AppComponent
+=======
+Semantic Error at line 43, column 1: Duplicate class definition: AppComponent
+>>>>>>> eb39182 (add new semantic and selector rule)

@@ -4,10 +4,13 @@ import Ast.Node;
 
 // BasicMetadataNode يجب أن يرث من MetadataEntryNode
 public class BasicMetadataNode extends MetadataEntryNode {
+    String key;
     private String value;
 
     public BasicMetadataNode(String identifier, String value) {
-        super(identifier);  // استخدام الـ constructor الأب
+
+        this.key=identifier;
+
         this.value = value;
     }
 

@@ -37,7 +37,9 @@
                    |htmlMetadata     #HtmlMetadataLabel
                    |selector         #SELECTORLABEL
                    |templateurl      #TAMPLATEURLLABEL
+                   |providin   #PROVIDINLABEL
                ;
+           providin:PROVIDEDIN COLON STRING;
 
            templateurl
                :TEMPLATEURL COLON STRING;
@@ -46,11 +48,11 @@
                : SELECTOR COLON STRING
                ;
            basicMetadata
-               : IDENTIFIER COLON STRING
+               : TEMPLATE COLON STRING
                ;
 
            htmlMetadata
-               : IDENTIFIER COLON BACKTICK htmlElement* BACKTICK  //#TEMPLATELABEL
+               : TEMPLATE COLON BACKTICK htmlElement* BACKTICK  //#TEMPLATELABEL
                ;
 
            classDeclaration
@@ -78,13 +80,13 @@
                 ;
 
            basevalue
-                 : IDENTIFIER   #IDENTIFIRELABEL
-                 | STRING      #STRINGLABEL
-                 |NUMBER     # NUMBERLABEL
-                 |ANY        #ANYLABEL
-                 |VOID       #VOIDLABEL
-                 |ONINIT      #ONINITLABEL
-                 | NULL       #NULLLABEL
+                 :IDENTIFIER   #IDENTIFIRELABEL
+                 |STRING       #STRINGLABEL
+                 |NUMBER       # NUMBERLABEL
+                 |ANY          #ANYLABEL
+                 |VOID         #VOIDLABEL
+                 |ONINIT       #ONINITLABEL
+                 |NULL         #NULLLABEL
                 ;
             classBody  : (propertyDeclaration | methodDeclaration | constructor | statement | decorator | ngOnInit | selectProduct | onbutton | getproduct | products | lambdaExpression|propertyAccess|functionDeclaration)*  #ClassBodyLabel;
 
@@ -111,13 +113,12 @@
               : FOR OPEN_PAREN LET IDENTIFIER EQUALS expression SEMICOLON expression SEMICOLON IDENTIFIER (PLUS_PLUS | MINUS_MINUS) CLOSE_PAREN OPEN_CURLY statement* CLOSE_CURLY
               | FOR OPEN_PAREN LET IDENTIFIER IN IDENTIFIER (DOT IDENTIFIER)* CLOSE_PAREN OPEN_CURLY statement* CLOSE_CURLY
               ;
-
-                  whileStatement
+         whileStatement
                     : WHILE OPEN_PAREN expression CLOSE_PAREN OPEN_CURLY statement* CLOSE_CURLY;
 
-                  switchStatement
+          switchStatement
                     : SWITCH OPEN_PAREN expression CLOSE_PAREN OPEN_CURLY caseClause* CLOSE_CURLY;
-                   ifStatement
+          ifStatement
                     : IF OPEN_PAREN equalityExpression CLOSE_PAREN OPEN_CURLY statement* CLOSE_CURLY
                       (ELSE OPEN_CURLY statement* CLOSE_CURLY)?;
 
@@ -138,11 +139,11 @@
 //                  ;
 //                  functionw:FUNICTION LOGMESSAMGE OPEN_PAREN CLOSE_PAREN COLON basevalue OPEN_CURLY  propertystatment  CLOSE_CURLY;
 //// جديد
-                    functionDeclaration
+                   functionDeclaration
                         : FUNICTION IDENTIFIER OPEN_PAREN parameterList? CLOSE_PAREN COLON value functionB;
 
 
-                    functionB
+                   functionB
                         : OPEN_CURLY statement* CLOSE_CURLY;
 
                    propertystatment: CONSOLE DOT LOG OPEN_PAREN expression CLOSE_PAREN SEMICOLON;
@@ -302,23 +303,23 @@
                 |ngIf
                 |eventBinding
                 |angularButton
-                | '[' IDENTIFIER ']' '=' expression
-                | '(' IDENTIFIER ')' '=' expression
-                | '[' IDENTIFIER ']'
+                |'[' IDENTIFIER ']' '=' expression
+                |'(' IDENTIFIER ')' '=' expression
+                |'[' IDENTIFIER ']'
 
                 ;
-            closetag
+           closetag
                 : '</' IDENTIFIER '>';
 
 
-            ngIf
-                : '*ngIf' EQUALS expression;
+           ngIf
+                :'*ngIf' EQUALS expression;
            ngfor
-                : '*ngFor' EQUALS expression;
-            htmlContent
+                :'*ngFor' EQUALS expression;
+           htmlContent
                 : (htmlElement | textNode | interp)+;
 
-            interp
+           interp
                :identifierChain
                 ;
            identifierChain
