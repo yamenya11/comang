@@ -24,15 +24,15 @@ public class Main {
     public static void main(String[] args) {
 
 
-    // String filePath = "C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\app\\product\\product.component.ts";
-   // String filePath =  "C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\app\\product\\product.service.ts";
+        // String filePath = "C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\app\\product\\product.component.ts";
+        // String filePath =  "C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\app\\product\\product.service.ts";
         // String filePath =  "C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\antlr\\sample.angular";
-String filePath="C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\app\\product\\test11.txt";
-  // String filePath="C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\app\\product\\test33.txt";
-      //String filePath="C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\antlr\\test.angular";
-      //  String filePath =  "C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\antlr\\test.angular";
+        String filePath="D:\\comang\\src\\app\\product\\test11.txt";
+        // String filePath="C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\app\\product\\test33.txt";
+        //String filePath="C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\antlr\\test.angular";
+        //  String filePath =  "C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\antlr\\test.angular";
 
-    // String filePath="C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\antlr\\product-display.component.txt";
+        // String filePath="C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\antlr\\product-display.component.txt";
         try {
             CharStream source = CharStreams.fromFileName(filePath);
             AngularLexer lexer = new AngularLexer(source);
@@ -50,11 +50,11 @@ String filePath="C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\app\\product
 
 
 
-           System.out.println("\nSymbol Table:");
-           symbolTable.printSymbols();
+            System.out.println("\nSymbol Table:");
+            symbolTable.printSymbols();
 
             if (errorHandler.hasErrors()) {
-                errorHandler.writeErrorsToFile("C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\app\\product\\semantic_errors.txt");
+                errorHandler.writeErrorsToFile("D:\\comang\\src\\app\\product\\semantic_errors.txt");
                 System.out.println("Semantic errors saved to semantic_errors.txt");
             } else {
                 System.out.println("No semantic errors found.");
@@ -65,6 +65,3 @@ String filePath="C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\app\\product
             System.out.println("Error: " + e.getMessage());
         }
     }    }
-
-
-
