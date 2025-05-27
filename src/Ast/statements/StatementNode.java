@@ -2,7 +2,7 @@ package Ast.statements;
 
 import Ast.Node;
 
-public class StatementNode extends Node {
+public abstract  class StatementNode extends Node {
     private Node statement; // بيان أو تعبير داخل الجملة (statement)
     public StatementNode(Node statement) {
         this.statement = statement;

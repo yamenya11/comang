@@ -6,6 +6,8 @@ import Ast.components.ComponentNode;
 import Ast.declarations.ClassDeclarationNode;
 
 import Ast.expressions.ExpressionNode;
+import Ast.function.FUNDECLRATIONNODE;
+import Ast.function.FunctionBodyNode;
 import Ast.html.*;
 import Ast.metadata.*;
 import Ast.metadata.TemplateUrlNode;
@@ -22,6 +24,7 @@ import seminticerror.ErrorHandler;
 import seminticerror.Import;
 import seminticerror.SelectorSymbolTable;
 
+import java.beans.Statement;
 import java.util.*;
 //import org.antlr.runtime.tree.ParseTree;
 
@@ -360,7 +363,7 @@ List<KeyImportNode>app=new ArrayList<>();
         List<Node> statements = new ArrayList<>();
         if (ctx.statement() != null) {
             for (var statementCtx : ctx.statement()) {
-                statements.add(new StatementNode(new Node() {
+                statements.add(new ExpressionStatementNode(new Node() {
                     @Override
                     public String toString() {
                         return statementCtx.getText();
@@ -396,7 +399,47 @@ List<KeyImportNode>app=new ArrayList<>();
         return parameterNode;     }
 
 
+    @Override
+    public Node visitFunctionDeclaration(AngularParser.FunctionDeclarationContext ctx) {
+        String functionName = ctx.IDENTIFIER().getText();
+        List<ParameterNode> parameters = new ArrayList<>();
 
+        if (ctx.parameterList() != null) {
+            ParameterListNode paramListNode = (ParameterListNode) visit(ctx.parameterList());
+            parameters = paramListNode.getParameters();
+        }
+
+        String returnType = ctx.value().getText();
+        FunctionBodyNode body = (FunctionBodyNode) visit(ctx.functionB());
+
+        return new FUNDECLRATIONNODE(functionName, parameters, returnType, body);
+    }
+
+    @Override
+    public Node visitParameterList(AngularParser.ParameterListContext ctx) {
+        List<ParameterNode> parameters = new ArrayList<>();
+
+        for (var paramCtx : ctx.parameter2()) {
+            String name = paramCtx.IDENTIFIER().getText();
+            String type = paramCtx.value().getText();
+            parameters.add(new ParameterNode(name, type, null));
+        }
+
+        return new ParameterListNode(parameters);    }
+
+    @Override
+    public Node visitFunctionB(AngularParser.FunctionBContext ctx) {
+        List<StatementNode> statements = new ArrayList<>();
+        for (var stmt : ctx.statement()) {
+            statements.add((StatementNode) visit(stmt));
+        }
+        return new FunctionBodyNode(statements);
+    }
+
+    @Override
+    public Node visitPropertystatment(AngularParser.PropertystatmentContext ctx) {
+        return super.visitPropertystatment(ctx);
+    }
 
     @Override
     public Node visitSELECTPRODUCTLABEL(AngularParser.SELECTPRODUCTLABELContext ctx) {
