@@ -18,6 +18,7 @@ import java.io.IOException;
  *
  */
 public class Main {
+
     private Main() {
     }
 
@@ -27,7 +28,7 @@ public class Main {
         // String filePath = "C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\app\\product\\product.component.ts";
         // String filePath =  "C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\app\\product\\product.service.ts";
         // String filePath =  "C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\antlr\\sample.angular";
-        String filePath="D:\\comang\\src\\app\\product\\test11.txt";
+        String filePath="C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\app\\product\\test11.txt";
         // String filePath="C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\app\\product\\test33.txt";
         //String filePath="C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\antlr\\test.angular";
         //  String filePath =  "C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\antlr\\test.angular";
@@ -42,8 +43,7 @@ public class Main {
             ErrorHandler errorHandler = new ErrorHandler();
             SelectorSymbolTable selectorSymbolTable=new SelectorSymbolTable();
             Import importsymboltable=new Import();
-            AngularASTBuilder builder = new AngularASTBuilder(symbolTable, selectorSymbolTable, classSymbolTable, errorHandler,importsymboltable);
-            Node ast = builder.visit(parser.program());
+            AngularASTBuilder builder = new AngularASTBuilder(symbolTable, selectorSymbolTable, classSymbolTable, errorHandler,importsymboltable);            Node ast = builder.visit(parser.program());
 
             System.out.println("AST Constructed Successfully:");
             System.out.println(ast);
@@ -54,7 +54,7 @@ public class Main {
             symbolTable.printSymbols();
 
             if (errorHandler.hasErrors()) {
-                errorHandler.writeErrorsToFile("D:\\comang\\src\\app\\product\\semantic_errors.txt");
+                errorHandler.writeErrorsToFile("C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\app\\product\\semantic_errors.txt");
                 System.out.println("Semantic errors saved to semantic_errors.txt");
             } else {
                 System.out.println("No semantic errors found.");

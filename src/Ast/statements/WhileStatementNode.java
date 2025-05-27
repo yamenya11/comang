@@ -5,11 +5,12 @@ import Ast.expressions.ExpressionNode;
 
 import java.util.List;
 
-public class WhileStatementNode extends Node {
+public class WhileStatementNode extends StatementNode {
     private ExpressionNode condition;
     private List<StatementNode> body;
 
     public WhileStatementNode(ExpressionNode condition, List<StatementNode> body) {
+        super();
         this.condition = condition;
         this.body = body;
     }

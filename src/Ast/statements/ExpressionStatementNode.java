@@ -6,8 +6,8 @@ public class ExpressionStatementNode extends StatementNode {
     private Node expression;
 
     public ExpressionStatementNode(Node expression) {
-        super(expression);
-      //  this.expression = expression;
+        super();
+        this.expression = expression;
     }
 
     public Node getExpression() {

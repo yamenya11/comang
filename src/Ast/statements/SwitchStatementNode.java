@@ -4,11 +4,12 @@ import Ast.Node;
 import Ast.expressions.ExpressionNode;
 import java.util.List;
 
-public class SwitchStatementNode extends Node {
+public class SwitchStatementNode extends StatementNode {
     private ExpressionNode expression;
     private List<CaseClauseNode> cases;
 
     public SwitchStatementNode(ExpressionNode expression, List<CaseClauseNode> cases) {
+        super();
         this.expression = expression;
         this.cases = cases;
     }

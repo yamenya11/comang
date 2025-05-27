@@ -3,7 +3,7 @@ import Ast.Node;
 
 import java.util.List;
 
-public class LoopStatementNode extends Node {
+public class LoopStatementNode extends StatementNode {
     private String identifier;
     private String inIdentifier;
     private List<StatementNode> statements;

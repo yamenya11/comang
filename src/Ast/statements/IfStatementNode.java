@@ -5,7 +5,7 @@ import Ast.expressions.ExpressionNode;
 
 import java.util.List;
 
-public class IfStatementNode extends Node {
+public class IfStatementNode extends StatementNode {
     private ExpressionNode condition;
     private List<StatementNode> statements;
     private List<StatementNode> elseStatements;

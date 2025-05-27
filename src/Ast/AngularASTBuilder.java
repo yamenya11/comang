@@ -24,19 +24,16 @@ import seminticerror.ErrorHandler;
 import seminticerror.Import;
 import seminticerror.SelectorSymbolTable;
 
-import java.beans.Statement;
 import java.util.*;
 //import org.antlr.runtime.tree.ParseTree;
 
 public class AngularASTBuilder extends AngularParserBaseVisitor<Node> {
     private final SymbolTable symbolTable;
-    private final Import importSymbols;
-    public AngularASTBuilder(SymbolTable symbolTable, SelectorSymbolTable selectorSymbolTable, ClassSymbolTable classSymbolTable, ErrorHandler errorHandler,  Import importSymbols  ) {
+    public AngularASTBuilder(SymbolTable symbolTable, SelectorSymbolTable selectorSymbolTable, ClassSymbolTable classSymbolTable, ErrorHandler errorHandler, Import importSymbols) {
         this.symbolTable = symbolTable;
         this.classSymbolTable = classSymbolTable;
         this.errorHandler = errorHandler;
         this.selectorSymbolTable = new SelectorSymbolTable();
-        this.importSymbols = importSymbols;
     }
     private final SelectorSymbolTable selectorSymbolTable;
     private final ClassSymbolTable classSymbolTable ;
@@ -346,6 +343,7 @@ List<KeyImportNode>app=new ArrayList<>();
     }
 
 
+
     @Override
     public Node visitConstructor(AngularParser.ConstructorContext ctx) {
         String constructorName = ctx.CONSTRUCTOR().getText();
@@ -353,18 +351,10 @@ List<KeyImportNode>app=new ArrayList<>();
         List<Node> parameters = new ArrayList<>();
         if (ctx.parameter() != null) {
             for (var parameterCtx : ctx.parameter()) {
-                String modifier = parameterCtx.modifiers().getText(); // مثل private
+                // Parse each parameter
+                String modifier = parameterCtx.modifiers().getText(); // مثال: private
                 String name = parameterCtx.IDENTIFIER().getText();
-                String type = parameterCtx.value().getText(); // اسم الكلاس أو الخدمة
-
-                if (!isTypeImported(type)) {
-                    errorHandler.reportSemanticError(
-                            "The class or service '" + type + "' is used without importing it.",
-                            parameterCtx.start
-                    );
-                }
-
-
+                String type = parameterCtx.value().getText();
                 parameters.add(new ParameterNode(name, type, modifier));
             }
         }
@@ -393,23 +383,7 @@ List<KeyImportNode>app=new ArrayList<>();
                 symbolTable.getCurrentScope()
         ));
 
-        return new ConstructorNode(constructorName, parameters, statements);
-    }
-
-    // ✅ دالة مساعدة للتحقق من أن النوع تم استيراده
-    private boolean isTypeImported(String type) {
-        for (SymbolEntry entry : importSymbols.getAllSymbols()) {
-            String importedItems = entry.getName(); // مثل: "ProductService, HttpClient"
-            String[] items = importedItems.split(",");
-            for (String item : items) {
-                if (item.trim().equals(type)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
+        return new ConstructorNode(constructorName, parameters, statements);   }
 
 
     @Override
@@ -423,6 +397,18 @@ List<KeyImportNode>app=new ArrayList<>();
         ParameterNode parameterNode = new ParameterNode(name, type, modifier);
         return parameterNode;     }
 
+    @Override
+    public Node visitParameterList(AngularParser.ParameterListContext ctx) {
+        List<ParameterNode> parameters = new ArrayList<>();
+
+        for (var paramCtx : ctx.parameter2()) {
+            String name = paramCtx.IDENTIFIER().getText();
+            String type = paramCtx.value().getText();
+            parameters.add(new ParameterNode(name, type, null));
+        }
+
+        return new ParameterListNode(parameters);
+    }
 
     @Override
     public Node visitFunctionDeclaration(AngularParser.FunctionDeclarationContext ctx) {
@@ -437,28 +423,11 @@ List<KeyImportNode>app=new ArrayList<>();
         String returnType = ctx.value().getText();
         FunctionBodyNode body = (FunctionBodyNode) visit(ctx.functionB());
 
-        return new FUNDECLRATIONNODE(functionName, parameters, returnType, body);
-    }
-
-    @Override
-    public Node visitParameterList(AngularParser.ParameterListContext ctx) {
-        List<ParameterNode> parameters = new ArrayList<>();
-
-        for (var paramCtx : ctx.parameter2()) {
-            String name = paramCtx.IDENTIFIER().getText();
-            String type = paramCtx.value().getText();
-            parameters.add(new ParameterNode(name, type, null));
-        }
-
-        return new ParameterListNode(parameters);    }
+        return new FUNDECLRATIONNODE(functionName, parameters, returnType, body);    }
 
     @Override
     public Node visitFunctionB(AngularParser.FunctionBContext ctx) {
-        List<StatementNode> statements = new ArrayList<>();
-        for (var stmt : ctx.statement()) {
-            statements.add((StatementNode) visit(stmt));
-        }
-        return new FunctionBodyNode(statements);
+        return super.visitFunctionB(ctx);
     }
 
     @Override
