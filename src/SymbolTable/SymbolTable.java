@@ -5,13 +5,10 @@ import java.util.*;
 public class SymbolTable {
     private Map<String, SymbolEntry> symbols = new HashMap<>();
     private Set<String> importedSources = new HashSet<>();
-    private Map<String, Map<String, SymbolEntry>> scopedSymbols = new HashMap<>();
     private String currentScope = "global";
 
     public void addSymbol(SymbolEntry entry) {
-        String scope = entry.getScope();
-        scopedSymbols.putIfAbsent(scope, new HashMap<>());
-        scopedSymbols.get(scope).put(entry.getName(), entry);
+        symbols.put(entry.getName(), entry);
     }
 
     public boolean isImported(String source) {
@@ -23,13 +20,9 @@ public class SymbolTable {
     }
 
     public SymbolEntry getSymbol(String name) {
-        return symbols.get(name);}
-    public SymbolEntry getSymbol(String name, String scope) {
-        if (scopedSymbols.containsKey(scope)) {
-            return scopedSymbols.get(scope).get(name);
-        }
-        return null;
+        return symbols.get(name);
     }
+
     public String getCurrentScope() {
         return currentScope;
     }
@@ -37,23 +30,15 @@ public class SymbolTable {
     public void setCurrentScope(String scope) {
         this.currentScope = scope;
     }
-    public boolean symbolExists(String name, String scope) {
-        return scopedSymbols.containsKey(scope) && scopedSymbols.get(scope).containsKey(name);
-    }
+
     public Collection<SymbolEntry> getAllSymbols() {
-        List<SymbolEntry> allSymbols = new ArrayList<>();
-        for (Map<String, SymbolEntry> scopeMap : scopedSymbols.values()) {
-            allSymbols.addAll(scopeMap.values());
-        }
-        return allSymbols;
+        return symbols.values();
     }
 
     public void printSymbols() {
         System.out.println("Symbol Table:");
-        for (String scope : scopedSymbols.keySet()) {
-            System.out.println("Scope: " + scope);
-            for (SymbolEntry entry : scopedSymbols.get(scope).values()) {
-                System.out.println("  " + entry);
-            }
+        for (SymbolEntry entry : symbols.values()) {
+            System.out.println(entry);
         }
-    }}
+    }
+}

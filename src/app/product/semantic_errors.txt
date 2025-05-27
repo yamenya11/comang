@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 Semantic Error at line 4, column 0: Duplicate import detected: angular/core
+Semantic Error at line 28, column 12: The class or service 'ProductService' is used without importing it.
 Semantic Error at line 44, column 1: Duplicate class definition: AppComponent
 =======
 Semantic Error at line 43, column 1: Duplicate class definition: AppComponent

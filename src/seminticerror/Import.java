@@ -4,12 +4,17 @@ import SymbolTable.SymbolEntry;
 import SymbolTable.SymbolType;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class Import {
 
     private final List<SymbolEntry> symbols = new ArrayList<>();
     private String currentScope = "global";
+
+    public Collection<SymbolEntry> getAllSymbols() {
+        return symbols;
+    }
 
 
 
