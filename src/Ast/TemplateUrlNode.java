@@ -1,5 +1,6 @@
 package Ast;
 
+//import Ast.html.HtmlElementAssist;
 import Ast.html.HtmlElementNode;
 
 import java.util.ArrayList;
@@ -33,15 +34,15 @@ public class TemplateUrlNode extends Node {
         return elementNodes;
     }
 
-    // البحث عن عنصر بواسطة اسم العلامة
-    public HtmlElementNode findElementByTagName(String tagName) {
-        for (HtmlElementNode element : elementNodes) {
-            if (tagName.equalsIgnoreCase(element.getTagName())) {
-                return element;
-            }
-        }
-        return null;
-    }
+//    // البحث عن عنصر بواسطة اسم العلامة
+//    public HtmlElementNode findElementByTagName(String tagName) {
+//        for (HtmlElementAssist element : ct) {
+//            if (tagName.equalsIgnoreCase(element.getTagName())) {
+//                return element;
+//            }
+//        }
+//        return null;
+//    }
 
     @Override
     public String toString() {

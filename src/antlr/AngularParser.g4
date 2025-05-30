@@ -52,7 +52,7 @@
                ;
 
            htmlMetadata
-               : TEMPLATE COLON BACKTICK htmlElement* BACKTICK  //#TEMPLATELABEL
+               : TEMPLATE COLON BACKTICK htmlElement* BACKTICK
                ;
 
            classDeclaration
@@ -132,25 +132,11 @@
                         : CASE expression COLON statement*
                         | DEFAULT COLON statement*;
 
-
-//                  function:FUNICTION ADD OPEN_PAREN CLOSE_PAREN    ;
-//                  ff:IDENTIFIER COLON
-//
-//                  ;
-//                  functionw:FUNICTION LOGMESSAMGE OPEN_PAREN CLOSE_PAREN COLON basevalue OPEN_CURLY  propertystatment  CLOSE_CURLY;
-//// جديد
                    functionDeclaration
                         : FUNICTION IDENTIFIER OPEN_PAREN parameterList? CLOSE_PAREN COLON value functionB;
-
-
                    functionB
                         : OPEN_CURLY statement* CLOSE_CURLY;
-
                    propertystatment: CONSOLE DOT LOG OPEN_PAREN expression CLOSE_PAREN SEMICOLON;
-
-
-
-//                 propertystatment: CONSOLE DOT LOG OPEN_PAREN expression   CLOSE_PAREN SEMICOLON;
 
                   methodDeclaration
                  : IDENTIFIER OPEN_PAREN parameter (COMMA parameter)* CLOSE_PAREN COLON value OPEN_CURLY statement* CLOSE_CURLY;
@@ -162,48 +148,63 @@
                    | PUBLIC
                    | PROTECTED;
 
-             statement
-                 : expression SEMICOLON
-                //  |propertyAccess
-                 | ifStatement
-                 | loopStatement
-                 | switchStatement
-                 | methodDeclaration
-                 | propertyDeclaration
-                 | functionCall SEMICOLON
-                 | IDENTIFIER EQUALS expression SEMICOLON
-                 |returnStatement
-                 |propertyAccess
-                 |propertystatment
+//             statement
+//                 : expression SEMICOLON
+//                //  |propertyAccess
+//                 | ifStatement
+//                 | loopStatement
+//                 | switchStatement
+//                 | methodDeclaration
+//                 | propertyDeclaration
+//                 | functionCall SEMICOLON
+//                 | IDENTIFIER EQUALS expression SEMICOLON
+//                 |returnStatement
+//                 |propertyAccess
+//                 |propertystatment
+//
+//                 ;
+              statement
+                  : IDENTIFIER COLON statement                            # LABELED_STATEMENT
+                  | expression SEMICOLON                                  # EXPRESSION_STATEMENT
+                  | ifStatement                                            # IF_STATEMENT
+                  | loopStatement                                          # LOOP_STATEMENT
+                  | switchStatement                                        # SWITCH_STATEMENT
+                  | methodDeclaration                                      # METHOD_DECLARATION_STATEMENT
+                  | propertyDeclaration                                    # PROPERTY_DECLARATION_STATEMENT
+                  | functionCall SEMICOLON                                 # FUNCTION_CALL_STATEMENT
+                  | IDENTIFIER EQUALS expression SEMICOLON                 # ASSIGNMENT_STATEMENT
+                  | returnStatement                                        # RETURN_STATEMENT
+                  | propertyAccess                                         # PROPERTY_ACCESS_STATEMENT
+                  | propertystatment                                       # CONSOLE_STATEMENT
+                  ;
 
-                 ;
 
             expression
                 //: lambdaExpression
                // |  primaryExpression expressionRest?
-                : expression PLUS expression   #  EXPPLUS
-                | expression MINUS expression  # EXPMINUS
-                | expression EQUALS expression  #  EXPEQUALS
-                | expression LESS_THAN expression  # EXPLESS
+                : expression PLUS expression           #  EXPPLUS
+                | expression MINUS expression          # EXPMINUS
+                | expression EQUALS expression         #  EXPEQUALS
+                | expression LESS_THAN expression      # EXPLESS
                 | expression GREATER_THAN expression   # EXPGREATER
-                | expression STAR expression   #EXPSTAR
-                | expression DIVIDE expression   # EXPDIVIDE
-                | expression MOD expression   #  EXPMOD
-                //  | arrayLiteral   #ARRAYLITERAL
-                | functionCall   #FUNCTIONCALLLABEL
-                | propertyAccess  # EXPPRO
-                | expression PLUS_PLUS   #   EXPPLUSPLUS
-                | expression MINUS_MINUS   #  EXPMINMIN
-                | OPEN_PAREN expression CLOSE_PAREN   #  EXPPAREN
-                | IDENTIFIER    #  EXPID
-                | STRING   #   EXPSTRING
-                | NUMBER    #  EXPNUMBER
-                 |INTEGER   # EXPINTEGER
+                | expression STAR expression           #EXPSTAR
+                | expression DIVIDE expression         # EXPDIVIDE
+                | expression MOD expression            #  EXPMOD
+            //  | arrayLiteral   #ARRAYLITERAL
+                | functionCall                         #FUNCTIONCALLLABEL
+                | propertyAccess                       # EXPPRO
+                | expression PLUS_PLUS                 #EXPPLUSPLUS
+                | expression MINUS_MINUS               #EXPMINMIN
+                | OPEN_PAREN expression CLOSE_PAREN    #EXPPAREN
+                | IDENTIFIER                           #EXPID
+                | STRING                               #EXPSTRING
+                | NUMBER                               #EXPNUMBER
+                 |INTEGER                              # EXPINTEGER
                ;
 
           propertyAccess
-          : calfun  # CALFUNLABEL
-          | iddot # IDDOTLABEL
+          : calfun    # CALFUNLABEL
+          | iddot     # IDDOTLABEL
           | functhis  # FUNCTHISLABEL
           ;
 
@@ -212,14 +213,14 @@
            functhis: THIS DOT IDENTIFIER DOT GET_PRODUCTS  OPEN_PAREN CLOSE_PAREN
             ;
 
-               functionCall
-                   : propertyAccess OPEN_PAREN (expression (COMMA expression)*)? CLOSE_PAREN
-                   | IDENTIFIER OPEN_PAREN (expression (COMMA expression)*)? CLOSE_PAREN
-                   |propertyAccess OPEN_PAREN argumentList? CLOSE_PAREN
-                   |propertyAccess OPEN_PAREN CLOSE_PAREN SEMICOLON;
+       functionCall
+           : propertyAccess OPEN_PAREN (expression (COMMA expression)*)? CLOSE_PAREN
+           | IDENTIFIER OPEN_PAREN (expression (COMMA expression)*)? CLOSE_PAREN
+           |propertyAccess OPEN_PAREN argumentList? CLOSE_PAREN
+           |propertyAccess OPEN_PAREN CLOSE_PAREN SEMICOLON;
 
-                  selectProduct
-                  : SELECTPRODUCT OPEN_PAREN parameter (COMMA parameter)* CLOSE_PAREN (':' VOID)? OPEN_CURLY statement* CLOSE_CURLY      #SELECTPRODUCTLABEL;
+      selectProduct
+      : SELECTPRODUCT OPEN_PAREN parameter (COMMA parameter)* CLOSE_PAREN (':' VOID)? OPEN_CURLY statement* CLOSE_CURLY      #SELECTPRODUCTLABEL;
 
                 argumentList
                  : expression (COMMA expression)*
@@ -253,17 +254,19 @@
                 parameter2
                     : IDENTIFIER COLON value;
 
-             onbutton:ONBUTTONCLICK '('')' '{' basevalue '(' expression')' ';''}' ;
-             arrayvalue
+                 onbutton
+                 : ONBUTTONCLICK OPEN_PAREN CLOSE_PAREN OPEN_CURLY basevalue OPEN_PAREN expression CLOSE_PAREN SEMICOLON CLOSE_CURLY ;
+
+                 arrayvalue
                 : basevalue OPEN_SQUARE CLOSE_SQUARE
                 | ARRAY LESS_THAN basevalue GREATER_THAN;
-            decorator
+                decorator
                 :  OUTPUT OPEN_PAREN CLOSE_PAREN propertyAssignment SEMICOLON;
 
-            propertyAssignment
+                propertyAssignment
                 : IDENTIFIER EQUALS NEW IDENTIFIER (LESS_THAN value GREATER_THAN)? OPEN_PAREN CLOSE_PAREN;
 
-            expressionList
+                expressionList
                 : expression (COMMA expression)*;
 
             ngOnInit
@@ -277,40 +280,48 @@
                 : expression
                 | OPEN_CURLY statement* CLOSE_CURLY
                 ;
-            returnStatement
-                : RETURN (expressionList | expression) SEMICOLON
+         returnStatement:RETURN (expressionList | expression) SEMICOLON
                     ;
-            htmlElement
-                    :opentag (htmlAttribute)* GREATER_THAN htmlContent* closetag
-                    |opentag (htmlAttribute)* '/>'
-                    |opentag CLASS EQUALS textNode GREATER_THAN htmlContent* closetag
-                    |angularButton
-                    |selfClosingElement
-                    ;
-            angularButton
-                  : '<' BUTTON (IDENTIFIER)   '=' expression '>' STRING '</' BUTTON '>';
 
-             selfClosingElement
-            : '<' IDENTIFIER (htmlAttribute)* '/' GREATER_THAN
-            ;
-            opentag
-                : '<' IDENTIFIER;
+         htmlElement:htmlElementassist+;
 
-            htmlAttribute
-                :IDENTIFIER EQUALS STRING
-                |IDENTIFIER
-                |ngfor
-                |ngIf
-                |eventBinding
-                |angularButton
-                |'[' IDENTIFIER ']' '=' expression
-                |'(' IDENTIFIER ')' '=' expression
-                |'[' IDENTIFIER ']'
+          htmlElementassist
+              : standardHtmlElement      # STANDERHTMLELEMNT
+              | selfClosingHtmlElement   # SELFCLOSEHTMLELEMNT
+              | fixedHtmlElement         # FIXEDHTMLELEMNT
+              | angularButton            # ANGULARBUTTONLABEL
+              ;
 
-                ;
-           closetag
-                : '</' IDENTIFIER '>';
+         standardHtmlElement: opentag (htmlAttribute)* GREATER_THAN htmlContent* closetag ;
 
+         selfClosingHtmlElement: opentag (htmlAttribute)* '/>' ;
+
+         fixedHtmlElement: fixedtqg (htmlAttribute)* '>' htmlContent* closefixedtag ;
+
+         angularButton: LESS_THAN BUTTON (htmlAttribute)* GREATER_THAN htmlContent* GG BUTTON GREATER_THAN ;
+
+
+         opentag: LESS_THAN IDENTIFIER ;
+
+         closetag:GG IDENTIFIER GREATER_THAN ;
+
+
+        fixedtqg:LESS_THAN FIXEDTAGNAME ;
+
+        closefixedtag:GG FIXEDTAGNAME GREATER_THAN ;
+
+
+        htmlAttribute
+           : IDENTIFIER EQUALS STRING                  # NORMALATTRIBUTE
+           | IDENTIFIER                                # SIMPLEATTRIBUTE
+           | ngfor                                     # NGFORATTRIBUTE
+           | ngIf                                      # NGIFATTRIBUTE
+           | eventBinding                              # EVENTATTRIBUTE
+           | angularButton                             # ANGULARBUTTONATTRIBUTE
+           | '[' IDENTIFIER ']' '=' expression         # PROPERTYBINDINGATTRIBUTE
+           | '(' IDENTIFIER ')' '=' expression         # EVENTBINDINGATTRIBUTE
+           | '[' IDENTIFIER ']'                        # EMPTYPROPERTYBINDINGATTRIBUTE
+           ;
 
            ngIf
                 :'*ngIf' EQUALS expression;

@@ -391,11 +391,89 @@ public interface AngularParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitModifiers(AngularParser.ModifiersContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link AngularParser#statement}.
+	 * Visit a parse tree produced by the {@code LABELED_STATEMENT}
+	 * labeled alternative in {@link AngularParser#statement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitStatement(AngularParser.StatementContext ctx);
+	T visitLABELED_STATEMENT(AngularParser.LABELED_STATEMENTContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code EXPRESSION_STATEMENT}
+	 * labeled alternative in {@link AngularParser#statement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEXPRESSION_STATEMENT(AngularParser.EXPRESSION_STATEMENTContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code IF_STATEMENT}
+	 * labeled alternative in {@link AngularParser#statement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIF_STATEMENT(AngularParser.IF_STATEMENTContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code LOOP_STATEMENT}
+	 * labeled alternative in {@link AngularParser#statement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLOOP_STATEMENT(AngularParser.LOOP_STATEMENTContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code SWITCH_STATEMENT}
+	 * labeled alternative in {@link AngularParser#statement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSWITCH_STATEMENT(AngularParser.SWITCH_STATEMENTContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code METHOD_DECLARATION_STATEMENT}
+	 * labeled alternative in {@link AngularParser#statement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMETHOD_DECLARATION_STATEMENT(AngularParser.METHOD_DECLARATION_STATEMENTContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code PROPERTY_DECLARATION_STATEMENT}
+	 * labeled alternative in {@link AngularParser#statement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPROPERTY_DECLARATION_STATEMENT(AngularParser.PROPERTY_DECLARATION_STATEMENTContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code FUNCTION_CALL_STATEMENT}
+	 * labeled alternative in {@link AngularParser#statement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFUNCTION_CALL_STATEMENT(AngularParser.FUNCTION_CALL_STATEMENTContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ASSIGNMENT_STATEMENT}
+	 * labeled alternative in {@link AngularParser#statement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitASSIGNMENT_STATEMENT(AngularParser.ASSIGNMENT_STATEMENTContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code RETURN_STATEMENT}
+	 * labeled alternative in {@link AngularParser#statement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRETURN_STATEMENT(AngularParser.RETURN_STATEMENTContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code PROPERTY_ACCESS_STATEMENT}
+	 * labeled alternative in {@link AngularParser#statement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPROPERTY_ACCESS_STATEMENT(AngularParser.PROPERTY_ACCESS_STATEMENTContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code CONSOLE_STATEMENT}
+	 * labeled alternative in {@link AngularParser#statement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCONSOLE_STATEMENT(AngularParser.CONSOLE_STATEMENTContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code EXPMINMIN}
 	 * labeled alternative in {@link AngularParser#expression}.
@@ -682,17 +760,57 @@ public interface AngularParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitHtmlElement(AngularParser.HtmlElementContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code STANDERHTMLELEMNT}
+	 * labeled alternative in {@link AngularParser#htmlElementassist}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSTANDERHTMLELEMNT(AngularParser.STANDERHTMLELEMNTContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code SELFCLOSEHTMLELEMNT}
+	 * labeled alternative in {@link AngularParser#htmlElementassist}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSELFCLOSEHTMLELEMNT(AngularParser.SELFCLOSEHTMLELEMNTContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code FIXEDHTMLELEMNT}
+	 * labeled alternative in {@link AngularParser#htmlElementassist}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFIXEDHTMLELEMNT(AngularParser.FIXEDHTMLELEMNTContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ANGULARBUTTONLABEL}
+	 * labeled alternative in {@link AngularParser#htmlElementassist}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitANGULARBUTTONLABEL(AngularParser.ANGULARBUTTONLABELContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AngularParser#standardHtmlElement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStandardHtmlElement(AngularParser.StandardHtmlElementContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AngularParser#selfClosingHtmlElement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSelfClosingHtmlElement(AngularParser.SelfClosingHtmlElementContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AngularParser#fixedHtmlElement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFixedHtmlElement(AngularParser.FixedHtmlElementContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link AngularParser#angularButton}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitAngularButton(AngularParser.AngularButtonContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link AngularParser#selfClosingElement}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitSelfClosingElement(AngularParser.SelfClosingElementContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link AngularParser#opentag}.
 	 * @param ctx the parse tree
@@ -700,17 +818,86 @@ public interface AngularParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitOpentag(AngularParser.OpentagContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link AngularParser#htmlAttribute}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitHtmlAttribute(AngularParser.HtmlAttributeContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link AngularParser#closetag}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitClosetag(AngularParser.ClosetagContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AngularParser#fixedtqg}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFixedtqg(AngularParser.FixedtqgContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AngularParser#closefixedtag}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitClosefixedtag(AngularParser.ClosefixedtagContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code NORMALATTRIBUTE}
+	 * labeled alternative in {@link AngularParser#htmlAttribute}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNORMALATTRIBUTE(AngularParser.NORMALATTRIBUTEContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code SIMPLEATTRIBUTE}
+	 * labeled alternative in {@link AngularParser#htmlAttribute}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSIMPLEATTRIBUTE(AngularParser.SIMPLEATTRIBUTEContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code NGFORATTRIBUTE}
+	 * labeled alternative in {@link AngularParser#htmlAttribute}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNGFORATTRIBUTE(AngularParser.NGFORATTRIBUTEContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code NGIFATTRIBUTE}
+	 * labeled alternative in {@link AngularParser#htmlAttribute}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNGIFATTRIBUTE(AngularParser.NGIFATTRIBUTEContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code EVENTATTRIBUTE}
+	 * labeled alternative in {@link AngularParser#htmlAttribute}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEVENTATTRIBUTE(AngularParser.EVENTATTRIBUTEContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ANGULARBUTTONATTRIBUTE}
+	 * labeled alternative in {@link AngularParser#htmlAttribute}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitANGULARBUTTONATTRIBUTE(AngularParser.ANGULARBUTTONATTRIBUTEContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code PROPERTYBINDINGATTRIBUTE}
+	 * labeled alternative in {@link AngularParser#htmlAttribute}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPROPERTYBINDINGATTRIBUTE(AngularParser.PROPERTYBINDINGATTRIBUTEContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code EVENTBINDINGATTRIBUTE}
+	 * labeled alternative in {@link AngularParser#htmlAttribute}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEVENTBINDINGATTRIBUTE(AngularParser.EVENTBINDINGATTRIBUTEContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code EMPTYPROPERTYBINDINGATTRIBUTE}
+	 * labeled alternative in {@link AngularParser#htmlAttribute}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEMPTYPROPERTYBINDINGATTRIBUTE(AngularParser.EMPTYPROPERTYBINDINGATTRIBUTEContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link AngularParser#ngIf}.
 	 * @param ctx the parse tree

@@ -51,7 +51,10 @@
         }
         @Override
         public String toString() {
-            return "SymbolEntry{name='" + name + "', type=" + type + ", value='" + value+ "', scope='" + scope  +"'}";
+            return String.format(
+                    "Name: %-15s | Type: %-12s | Value: %-20s | Scope: %-10s",
+                    name, type, value == null ? "null" : value, scope
+            );
         }
 
     }

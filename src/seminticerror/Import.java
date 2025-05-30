@@ -11,7 +11,7 @@ public class Import {
 
     private final List<SymbolEntry> symbols = new ArrayList<>();
     private String currentScope = "global";
-
+    Import importSymbols;
     public Collection<SymbolEntry> getAllSymbols() {
         return symbols;
     }

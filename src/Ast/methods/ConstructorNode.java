@@ -1,5 +1,6 @@
 package Ast.methods;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import Ast.Node;

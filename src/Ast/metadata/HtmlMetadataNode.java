@@ -1,20 +1,21 @@
 package Ast.metadata;
 
 import Ast.Node;
+import Ast.expressions.ExpressionNode;
 import Ast.html.HtmlElementNode;
 import java.util.List;
 
 // HtmlMetadataNode يجب أن يرث من MetadataEntryNode
 public class HtmlMetadataNode extends MetadataEntryNode {
     String key;
-    private List<HtmlElementNode> body;
+    private List<Node> body;
 
-    public HtmlMetadataNode(String key, List<HtmlElementNode> body) {
+    public HtmlMetadataNode(String key, List<Node> body) {
         this.key=key;
         this.body = body;
     }
 
-    public List<HtmlElementNode> getBody() {
+    public List<Node> getBody() {
         return body;
     }
 

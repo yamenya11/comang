@@ -10,8 +10,8 @@ import { OnInit } from "angular/core";
   // selector: 'app-root',
 
   template: `<div *ngFor="let product of products">
-               <h>{{ product.name }}</p>
-                 <p>السعر: {{ product.price }} ل س</p>
+               <h1>{{ product.name }}</p>
+                 <v>السعر: {{ product.price }} ل س</v>
                  <button (click)="selectProduct(product)">عرض التفاصيل</button>
                   <img [src]="product.image" alt="{{ product.name }}" />
              </div>
@@ -22,8 +22,6 @@ import { OnInit } from "angular/core";
              </div>`
 
 })
-
-
 
 export class AppComponent  {
 let myVar: string = "Hello";
@@ -43,6 +41,12 @@ constructor(private productService: ProductService) {
   selectProduct(product: any): void {
     this.selectedProduct = product;
   }
+function add(a: number, b: number): number {
+    return a + b;
+}
+function logMessage(): void {
+    console.log("No return value");
+}
 
 }export class AppComponent {
  let myVar: string = "Hello";

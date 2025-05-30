@@ -4,10 +4,7 @@ import SymbolTable.SymbolTable;
 import antlr.gen.AngularLexer;
 import antlr.gen.AngularParser;
 import org.antlr.v4.runtime.*;
-import seminticerror.ClassSymbolTable;
-import seminticerror.ErrorHandler;
-import seminticerror.Import;
-import seminticerror.SelectorSymbolTable;
+import seminticerror.*;
 
 import java.io.IOException;
 
@@ -43,7 +40,9 @@ public class Main {
             ErrorHandler errorHandler = new ErrorHandler();
             SelectorSymbolTable selectorSymbolTable=new SelectorSymbolTable();
             Import importsymboltable=new Import();
-            AngularASTBuilder builder = new AngularASTBuilder(symbolTable, selectorSymbolTable, classSymbolTable, errorHandler,importsymboltable);            Node ast = builder.visit(parser.program());
+            HtmlSymbolTable html=new HtmlSymbolTable();
+            AngularASTBuilder builder = new AngularASTBuilder(symbolTable, selectorSymbolTable, classSymbolTable, errorHandler,importsymboltable,html);
+            Node ast = builder.visit(parser.program());
 
             System.out.println("AST Constructed Successfully:");
             System.out.println(ast);

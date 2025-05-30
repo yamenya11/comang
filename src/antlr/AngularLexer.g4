@@ -44,6 +44,7 @@ INPUT : '@Input';
 OUTPUT : '@Output';
 Input: 'input';
 NEW : 'new';
+
 IMPLEMENTS:'implements';
 EXTENDS :'extends';
 ONINIT :'OnInit';
@@ -83,7 +84,7 @@ LINE_COMMENT: '//' ~[\r\n]* -> skip;
 BLOCK_COMMENT: '/*' .*? '*/' -> skip;
 WS: [ \t\r\n]+ -> skip;
 
-
+BUTTON:'button';
 
 // الرموز HTML:
 LESS_THAN: '<';
@@ -98,13 +99,12 @@ LS: 'ل' '.' 'س';
 
  Product:'product';
 NG :'*ngFor';
+FIXEDTAGNAME
+              : 'h1' | 'h2' | 'p' | 'div' | 'ul' | 'li' | 'span'|'img'   ;
 NI:'*ngIf';
 NULL:'null';
 ATTVALUE_VALUE:'attvalue_value';
-H1:'h1';
-BUTTON:'button';
-H2:'h2';
-P:'p';
+
 GG:'</';
 ARABIC_TEXT
     : [\u0621-\u064A0-9]+;

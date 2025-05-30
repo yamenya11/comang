@@ -37,6 +37,9 @@ public class SymbolTable {
 
     public void printSymbols() {
         System.out.println("Symbol Table:");
+        System.out.println(String.format("%-15s | %-12s | %-20s | %-10s",
+                "Name", "Type", "Value", "Scope"));
+        System.out.println("---------------------------------------------------------------------");
         for (SymbolEntry entry : symbols.values()) {
             System.out.println(entry);
         }

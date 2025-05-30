@@ -1,2 +1,5 @@
 Semantic Error at line 9, column 2: Invalid selector value: '99hello'. Selector must start with a letter or underscore and contain only alphanumeric characters, underscores or hyphens.
-Semantic Error at line 47, column 1: Duplicate class definition: AppComponent
+Semantic Error at line 13, column 15: Mismatched fixed HTML tags: <h1> closed with </p>
+Semantic Error at line 14, column 17: Tag <v> is not recognized as a valid fixed HTML tag.
+Semantic Error at line 29, column 12: The class or service 'ProductService' is used without importing it.
+Semantic Error at line 51, column 1: Duplicate class definition: AppComponent

@@ -9,6 +9,7 @@ import Ast.expressions.ExpressionNode;
 import Ast.function.FUNDECLRATIONNODE;
 import Ast.function.FunctionBodyNode;
 import Ast.html.*;
+import Ast.html.attrbute.*;
 import Ast.metadata.*;
 import Ast.metadata.TemplateUrlNode;
 import Ast.methods.ConstructorNode;
@@ -19,25 +20,38 @@ import SymbolTable.*;
 import antlr.gen.AngularParser;
 import Ast.statements.*;
 import antlr.gen.*;
-import seminticerror.ClassSymbolTable;
-import seminticerror.ErrorHandler;
-import seminticerror.Import;
-import seminticerror.SelectorSymbolTable;
+import seminticerror.*;
 
 import java.util.*;
 //import org.antlr.runtime.tree.ParseTree;
 
 public class AngularASTBuilder extends AngularParserBaseVisitor<Node> {
     private final SymbolTable symbolTable;
-    public AngularASTBuilder(SymbolTable symbolTable, SelectorSymbolTable selectorSymbolTable, ClassSymbolTable classSymbolTable, ErrorHandler errorHandler, Import importSymbols) {
+    private final Import importChecker;
+    private final HtmlSymbolTable html;
+
+    public AngularASTBuilder(SymbolTable symbolTable, SelectorSymbolTable selectorSymbolTable, ClassSymbolTable classSymbolTable, ErrorHandler errorHandler, Import importChecker,HtmlSymbolTable html) {
+        html.addSymbol(new SymbolEntry("h1", SymbolType.TAG, "h1", "global"));
+        html.addSymbol(new SymbolEntry("h2", SymbolType.TAG, "h2", "global"));
+        html.addSymbol(new SymbolEntry("p", SymbolType.TAG, "p", "global"));
+        html.addSymbol(new SymbolEntry("div", SymbolType.TAG, "div", "global"));
+        html.addSymbol(new SymbolEntry("ul", SymbolType.TAG, "ul", "global"));
+        html.addSymbol(new SymbolEntry("button", SymbolType.TAG, "button", "global"));
+        html.addSymbol(new SymbolEntry("li", SymbolType.TAG, "li", "global"));
+        html.addSymbol(new SymbolEntry("span", SymbolType.TAG, "span", "global"));
+        html.addSymbol(new SymbolEntry("img", SymbolType.TAG, "img", "global"));
         this.symbolTable = symbolTable;
         this.classSymbolTable = classSymbolTable;
         this.errorHandler = errorHandler;
-        this.selectorSymbolTable = new SelectorSymbolTable();
+        this.selectorSymbolTable =selectorSymbolTable;
+        this.importChecker = importChecker;
+        this.html =html;
+
     }
     private final SelectorSymbolTable selectorSymbolTable;
     private final ClassSymbolTable classSymbolTable ;
     private final ErrorHandler errorHandler;
+
     /*@Override
     public Node visitApplication(AngularParser.ApplicationContext ctx) {
         List<Node> applicationNodes = new ArrayList<>();
@@ -64,6 +78,7 @@ public class AngularASTBuilder extends AngularParserBaseVisitor<Node> {
 
         return new ApplicationNode(applicationNodes);
     }*/
+
 
     @Override
     public Node visitProgram(AngularParser.ProgramContext ctx) {
@@ -136,7 +151,8 @@ List<KeyImportNode>app=new ArrayList<>();
     public Node visitINJECTABLELABEL(AngularParser.INJECTABLELABELContext ctx) {
         String injectableName = ctx.injectable().getText();
         symbolTable.addSymbol(new SymbolEntry(injectableName, SymbolType.INJECTABLE, null, symbolTable.getCurrentScope()));
-        return new InjectableLabelNode(injectableName) ;       }
+        return new InjectableLabelNode(injectableName) ;
+    }
 
 //  @Override
 //    public Node visitImportStatement(AngularParser.ImportStatementContext ctx) {
@@ -154,8 +170,8 @@ List<KeyImportNode>app=new ArrayList<>();
     public Node visitComponent(AngularParser.ComponentContext ctx) {
         String componentName = ctx.COMPONENT().getText();
 
-        AngularParser.MetadataContext mctx = ctx.metadata();
-
+       String vv = ctx.metadata().getText();
+//warning
         List<MetadataEntryNode> metadataEntries = new ArrayList<>();
         for (var entCtx : ctx.metadata().metadataEntry()) {
             metadataEntries.add((MetadataEntryNode) visit(entCtx));
@@ -176,6 +192,9 @@ List<KeyImportNode>app=new ArrayList<>();
     public Node visitBasicMetadata(AngularParser.BasicMetadataContext ctx) {
         String key = ctx.TEMPLATE().getText();
         String value = ctx.STRING().getText().replaceAll("^\"|\"$", "");
+
+
+
         String scope = symbolTable.getCurrentScope();
         symbolTable.addSymbol(new SymbolEntry(key, SymbolType.METADATA, value, scope));
 
@@ -187,10 +206,12 @@ List<KeyImportNode>app=new ArrayList<>();
     @Override
     public Node visitHtmlMetadata(AngularParser.HtmlMetadataContext ctx) {
         String key = ctx.TEMPLATE().getText();
-        List<HtmlElementNode> htmlChildren = new ArrayList<>();
+        List<Node> htmlChildren = new ArrayList<>();
         for (var htmlElemCtx : ctx.htmlElement()) {
-            htmlChildren.add((HtmlElementNode) visit(htmlElemCtx));
+            htmlChildren.add((Node) visit(htmlElemCtx));
         }
+//
+
         String scope = symbolTable.getCurrentScope();
         symbolTable.addSymbol(new SymbolEntry(key, SymbolType.METADATA, "", scope));
 
@@ -350,30 +371,25 @@ List<KeyImportNode>app=new ArrayList<>();
 
         List<Node> parameters = new ArrayList<>();
         if (ctx.parameter() != null) {
+
             for (var parameterCtx : ctx.parameter()) {
-                // Parse each parameter
-                String modifier = parameterCtx.modifiers().getText(); // مثال: private
+
+                String modifier = parameterCtx.modifiers().getText();
                 String name = parameterCtx.IDENTIFIER().getText();
                 String type = parameterCtx.value().getText();
+                if (!importChecker.isImported(type)) {
+                    errorHandler.reportSemanticError("The class or service '" + type + "' is used without importing it.", parameterCtx.start);
+                }
                 parameters.add(new ParameterNode(name, type, modifier));
-            }
-        }
+            }    }
 
         List<Node> statements = new ArrayList<>();
         if (ctx.statement() != null) {
-            for (var statementCtx : ctx.statement()) {
-                statements.add(new ExpressionStatementNode(new Node() {
-                    @Override
-                    public String toString() {
-                        return statementCtx.getText();
-                    }
 
-                    @Override
-                    public void accept(Node visitor) {
-                        visitor.accept(this);
-                    }
-                }));
+            for(var statm:ctx.statement()){
+                statements.add(visit(statm));
             }
+
         }
 
         symbolTable.addSymbol(new SymbolEntry(
@@ -384,6 +400,7 @@ List<KeyImportNode>app=new ArrayList<>();
         ));
 
         return new ConstructorNode(constructorName, parameters, statements);   }
+
 
 
     @Override
@@ -502,118 +519,194 @@ List<KeyImportNode>app=new ArrayList<>();
         return new EmptyArrayNode(name, type);    }
 
 
+
+
     @Override
     public Node visitHtmlElement(AngularParser.HtmlElementContext ctx) {
-        String tagName = ctx.opentag().IDENTIFIER().getText();
-        HtmlElementNode elementNode = new HtmlElementNode(tagName, null); // value=null مؤقتًا
-        if (ctx.opentag().IDENTIFIER() != null) {
-            for (AngularParser.HtmlAttributeContext attrCtx : ctx.htmlAttribute()) {
-                HtmlAttributeNode attr = (HtmlAttributeNode) visit(attrCtx);
-                elementNode.addAttribute(attr);
-
-                String attrName = attr.getName();
-                String attrValue = attr.getValue();
-
-                if ("*ngIf".equals(attrName)) {
-                    elementNode.setNgIfExpression(attrValue);
-                } else if ("*ngFor".equals(attrName)) {
-                    elementNode.setNgForExpression(attrValue);
-                } else if (attrName.startsWith("(") && attrName.endsWith(")")) {
-                    String eventName = attrName.substring(1, attrName.length() - 1);
-                    elementNode.addEventBinding(eventName, attrValue);
-                }
+        if (ctx.htmlElementassist().size() == 1) {
+            return visit(ctx.htmlElementassist(0)); // فقط عنصر واحد، زُره
+        } else {
+            HtmlContentNode contentNode = new HtmlContentNode();
+            for (var assist : ctx.htmlElementassist()) {
+                Node child = visit(assist);
+                if (child != null) contentNode.addChild(child);
             }
+            return contentNode;
         }
-
-        if (ctx.htmlContent() != null) {
-            for (AngularParser.HtmlContentContext contentCtx : ctx.htmlContent()) {
-                Node child = visit(contentCtx);
-                if (child != null) {
-                    elementNode.addChild(child);
-                }
-            }
-        }
-
-        return elementNode;
     }
 
+    @Override
+    public Node visitNORMALATTRIBUTE(AngularParser.NORMALATTRIBUTEContext ctx) {
+        return new NormalAttributeNode(ctx.IDENTIFIER().getText(), ctx.STRING().getText().replace("\"", ""));
+    }
 
+    @Override
+    public Node visitSIMPLEATTRIBUTE(AngularParser.SIMPLEATTRIBUTEContext ctx) {
+        return super.visitSIMPLEATTRIBUTE(ctx);
+    }
+
+    @Override
+    public Node visitNGFORATTRIBUTE(AngularParser.NGFORATTRIBUTEContext ctx) {
+        return new NgForNode(ctx.ngfor().expression().getText());
+    }
+
+    @Override
+    public Node visitNGIFATTRIBUTE(AngularParser.NGIFATTRIBUTEContext ctx) {
+        String name=ctx.ngIf().getText();
+        return new NgIfNode(name);
+    }
+
+    @Override
+    public Node visitEVENTATTRIBUTE(AngularParser.EVENTATTRIBUTEContext ctx) {
+        String name = ctx.eventBinding().IDENTIFIER().getText();
+        String expression = ctx.eventBinding().expression().getText();
+        return new EventBindingNode(name, expression);    }
+
+    @Override
+    public Node visitANGULARBUTTONATTRIBUTE(AngularParser.ANGULARBUTTONATTRIBUTEContext ctx) {
+        return super.visitANGULARBUTTONATTRIBUTE(ctx);
+    }
+
+    @Override
+    public Node visitPROPERTYBINDINGATTRIBUTE(AngularParser.PROPERTYBINDINGATTRIBUTEContext ctx) {
+        String name = ctx.getChild(1).getText();
+        String expression = ctx.getChild(4).getText();
+        SymbolEntry entry = new SymbolEntry(name, SymbolType.TAG, expression, "scope");
+
+        return new PropertyBindingNode(name, expression);
+    }
+
+    @Override
+    public Node visitEVENTBINDINGATTRIBUTE(AngularParser.EVENTBINDINGATTRIBUTEContext ctx) {
+        return super.visitEVENTBINDINGATTRIBUTE(ctx);
+    }
+
+    @Override
+    public Node visitStandardHtmlElement(AngularParser.StandardHtmlElementContext ctx) {
+        String tagName = ctx.opentag().IDENTIFIER().getText();
+        StandardHtmlElementNode node = new StandardHtmlElementNode(tagName);
+
+        String openTag = ctx.opentag().IDENTIFIER().getText();
+        String closeTag = ctx.closetag().IDENTIFIER().getText();
+
+
+        if (!openTag.equals(closeTag)) {
+            errorHandler.reportSemanticError(
+                    "Mismatched fixed HTML tags: <" + openTag + "> closed with </" + closeTag + ">",
+                    ctx.start
+            );
+
+        }
+        if (!html.isTagAllowed(tagName)) {
+            errorHandler.reportSemanticError(
+                    "Tag <" + tagName + "> is not recognized as a valid fixed HTML tag.",
+                    ctx.start
+            );
+        }
+        // صفات العنصر
+        for (var attr : ctx.htmlAttribute()) {
+            HtmlAttributeNode attributeNode = (HtmlAttributeNode) visit(attr);
+            node.addAttribute(attributeNode);
+        }
+
+        // المحتوى الداخلي (عناصر أو نصوص أو تعبيرات)
+        for (var content : ctx.htmlContent()) {
+            Node contentNode = visit(content);
+            node.addChild(contentNode);
+        }
+        SymbolEntry entry = new SymbolEntry(tagName, SymbolType.TAG, closeTag, symbolTable.getCurrentScope());
+        symbolTable.addSymbol(entry);
+        return node;  }
+
+    @Override
+    public Node visitSelfClosingHtmlElement(AngularParser.SelfClosingHtmlElementContext ctx) {
+        String tagName = ctx.opentag().IDENTIFIER().getText();
+        SelfClosingHtmlElementNode node = new SelfClosingHtmlElementNode(tagName);
+
+        for (var attr : ctx.htmlAttribute()) {
+            HtmlAttributeNode attributeNode = (HtmlAttributeNode) visit(attr);
+            node.addAttribute(attributeNode);
+        }   SymbolEntry entry = new SymbolEntry(tagName, SymbolType.TAG, "/>", symbolTable.getCurrentScope());
+        symbolTable.addSymbol(entry);
+
+        return node;    }
+
+    @Override
+    public Node visitFixedHtmlElement(AngularParser.FixedHtmlElementContext ctx) {
+        String tagName = ctx.fixedtqg().FIXEDTAGNAME().getText();
+        String close =ctx.closefixedtag().getText();
+        FixedHtmlElementNode node = new FixedHtmlElementNode(tagName);
+        for (var attr : ctx.htmlAttribute()) {
+            HtmlAttributeNode attributeNode = (HtmlAttributeNode) visit(attr);
+            node.addAttribute(attributeNode);
+        }
+
+        SymbolEntry entry = new SymbolEntry(tagName, SymbolType.TAG, close, symbolTable.getCurrentScope());
+        symbolTable.addSymbol(entry);
+        for (var content : ctx.htmlContent()) {
+            node.addChild(visit(content));
+        }
+
+        return node;   }
 
 
     @Override
     public Node visitAngularButton(AngularParser.AngularButtonContext ctx) {
-        return super.visitAngularButton(ctx);
-    }
+        String identifier = ctx.BUTTON(0).getText();
+        String expression = ctx.htmlAttribute(0).getText();
+        String buttonText = ctx.htmlContent(0).getText();
+        SymbolEntry entry = new SymbolEntry(identifier, SymbolType.TAG, buttonText, symbolTable.getCurrentScope());
+        symbolTable.addSymbol(entry);
 
-    @Override
-    public Node visitSelfClosingElement(AngularParser.SelfClosingElementContext ctx) {
-        return super.visitSelfClosingElement(ctx);
-    }
-
-    @Override
-    public Node visitOpentag(AngularParser.OpentagContext ctx) {
-        return super.visitOpentag(ctx);
-    }
-
-    public Node visitHtmlAttribute(AngularParser.HtmlAttributeContext ctx) {
-        String name = null;
-        String value = null;
-
-        if (ctx.IDENTIFIER() != null && ctx.STRING() != null) {
-            name = ctx.IDENTIFIER().getText();
-            value = ctx.STRING().getText().replaceAll("\"", "");
-        }
-
-        else if (ctx.IDENTIFIER() != null) {
-            name = ctx.IDENTIFIER().getText();
-            value = "";
-        }
-
-        else if (ctx.ngIf() != null) {
-            name = "*ngIf";
-            value = ctx.ngIf().getText();
-        }
-
-        else if (ctx.ngfor() != null) {
-            name = "*ngFor";
-            value = ctx.ngfor().getText();
-        }
-
-        else if (ctx.eventBinding() != null) {
-            name = ctx.eventBinding().IDENTIFIER().getText();
-            value = ctx.eventBinding().IDENTIFIER().getText().replaceAll("\"", ""); // التعبير الخاص بـ event
-        }
-
-        else if (ctx.angularButton() != null) {
-            name = "angularButton";
-            value = ctx.angularButton().getText();
-        }
-
-        if (name == null || value == null) {
-            throw new RuntimeException("Invalid htmlAttribute context");
-        }
-
-        return new HtmlAttributeNode(name, value);
+        return new AngularButtonNode(identifier, expression, buttonText);
     }
 
 
-    @Override
-    public Node visitClosetag(AngularParser.ClosetagContext ctx) {
-        return super.visitClosetag(ctx);
-    }
 
-    @Override
-    public Node visitNgIf(AngularParser.NgIfContext ctx) {
-        return super.visitNgIf(ctx);
-    }
 
-    @Override
-    public Node visitNgfor(AngularParser.NgforContext ctx) {
-        return super.visitNgfor(ctx);
-    }
 
     @Override
     public Node visitHtmlContent(AngularParser.HtmlContentContext ctx) {
-        return super.visitHtmlContent(ctx);
+        HtmlContentNode contentNode = new HtmlContentNode();
+
+        for (var child : ctx.htmlElement()) {
+            Node node = visit(child);
+            if (node != null) contentNode.addChild(node);
+        }
+
+        for (var child : ctx.textNode()) {
+            Node node = visit(child);
+            if (node != null) contentNode.addChild(node);
+        }
+
+        for (var child : ctx.interp()) {
+            Node node = visit(child);
+            if (node != null) contentNode.addChild(node);
+        }
+
+        return contentNode;
     }
+
+    @Override
+    public Node visitTextNode(AngularParser.TextNodeContext ctx) {
+        String text = ctx.getText().trim();
+
+        if (!text.isEmpty()) {
+            SymbolEntry entry = new SymbolEntry(
+                    "TextNode",
+                    SymbolType.LITERAL,
+                    text,
+                    symbolTable.getCurrentScope()
+            );
+
+            symbolTable.addSymbol(entry);
+
+            // إنشاء العقدة وإرجاعها
+            return new TextNode(text);
+        }
+
+        return null;
+    }
+
+
 }
