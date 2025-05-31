@@ -305,6 +305,12 @@ public interface AngularParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitLetDeclaration(AngularParser.LetDeclarationContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link AngularParser#typeVarible}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTypeVarible(AngularParser.TypeVaribleContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link AngularParser#emptyArrayDeclaration}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

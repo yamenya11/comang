@@ -1,13 +1,12 @@
 package Ast.html;
 
 import Ast.Node;
-
 import java.util.List;
 
-public class InterpolationNode extends Node {
+public class IdentifierChainNode extends Node {
     private List<String> identifiers;
 
-    public InterpolationNode(List<String> identifiers) {
+    public IdentifierChainNode(List<String> identifiers) {
         this.identifiers = identifiers;
     }
 
@@ -17,7 +16,7 @@ public class InterpolationNode extends Node {
 
     @Override
     public String toString() {
-        return "InterpolationNode{{ " + identifiers + " }}";
+        return "IdentifierChainNode{" + identifiers + "}";
     }
 
     @Override
@@ -25,4 +24,3 @@ public class InterpolationNode extends Node {
         visitor.accept(this);
     }
 }
-

@@ -3,8 +3,8 @@ import { ProductService } from './product.service';  // استيراد الخد�
 
 @Component({
   selector: 'app-product',
-  templateUrl:'./product.nn',
-  styleUrls:['jkblbl']
+  templateUrl:'./product.nn'
+  //styleUrls:['jkblbl']
 })
 export class ProductComponent implements OnInit {
   products: any[] = [];

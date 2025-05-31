@@ -506,6 +506,16 @@ public interface AngularParserListener extends ParseTreeListener {
 	 */
 	void exitLetDeclaration(AngularParser.LetDeclarationContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link AngularParser#typeVarible}.
+	 * @param ctx the parse tree
+	 */
+	void enterTypeVarible(AngularParser.TypeVaribleContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link AngularParser#typeVarible}.
+	 * @param ctx the parse tree
+	 */
+	void exitTypeVarible(AngularParser.TypeVaribleContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link AngularParser#emptyArrayDeclaration}.
 	 * @param ctx the parse tree
 	 */

@@ -15,6 +15,5 @@ export class ProductComponent implements OnInit {
     // Use the service to parse input
     this.parsedData = this.parserService.parse();
 
-   // عرض الناتج في كونسول
   }
 }

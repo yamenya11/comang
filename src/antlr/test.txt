@@ -4,16 +4,13 @@ import { Component } from '@angular/core';
   selector: 'app-root'
 
 })
-export class AppComponent {
+export class AppComponent implements geager {
   products = [
     { name: 'منتج 1', price: 10 },
     { name: 'منتج 2', price: 20 },
     { name: 'منتج 3', price: 30 }
   ];
 
-  showDetails = (product) => {
-    console.log('تفاصيل المنتج:', product);
-  };
 
   ngOnInit(): void {
     this.fetchProducts();
@@ -48,7 +45,8 @@ switch (fruit) {
 
 
     for (let i = 0; i < this.products.length; i++) {
-      console.log('معالجة المنتج:', this.products);
+      console.log('معالجة المنتج:'+ this.products);
+    }else{   console.log('معالجة المنتج:'+ this.products);
     }
 
 }

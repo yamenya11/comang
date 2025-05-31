@@ -8,7 +8,7 @@ import { OnInit } from "angular/core";
   // selector: 'app_root',
   selector: '99hello',
   // selector: 'app-root',
-
+templateUrl:'src/app/product/product.component.html',
   template: `<div *ngFor="let product of products">
                <h1>{{ product.name }}</p>
                  <v>السعر: {{ product.price }} ل س</v>

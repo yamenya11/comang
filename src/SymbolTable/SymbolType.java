@@ -27,5 +27,6 @@ public enum SymbolType {
     NAME,
     INJECTABLE,
     PAIR,
-    TAG
+    TAG,
+
 }

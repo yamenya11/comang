@@ -1,9 +1,11 @@
-<div *ngFor="let product of products">
-    <h2>{{ product.name }}</h2>
-    <p>السعر: {{ product.price }} ل س</p>
-    <button (click)="selectProduct(product)">عرض التفاصيل</button>
-</div>
+//C:\Users\Yamen\IdeaProjects\Finalangular\src\app\product\product.component.html
 
+<div *ngFor="let product of products">
+    <h1>{{ product.name }}</h1>
+        <v>السعر: {{ product.price }} ل س</v>
+        <button (click)="selectProduct(product)">عرض التفاصيل</button>
+        <img [src]="product.image" alt="{{ product.name }}" />
+</div>
 <div *ngIf="selectedProduct">
     <h1>تفاصيل المنتج</h1>
     <p>الاسم: {{ selectedProduct.name }}</p>

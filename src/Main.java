@@ -23,14 +23,14 @@ public class Main {
 
 
         // String filePath = "C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\app\\product\\product.component.ts";
-        // String filePath =  "C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\app\\product\\product.service.ts";
+      //   String filePath =  "C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\app\\product\\product.service.txt";
         // String filePath =  "C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\antlr\\sample.angular";
-       // String filePath="C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\app\\product\\test11.txt";
+        String filePath="C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\app\\product\\test11.txt";
         // String filePath="C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\app\\product\\test33.txt";
         //String filePath="C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\antlr\\test.angular";
-          String filePath =  "C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\antlr\\test.txt";
+         // String filePath =  "C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\antlr\\test.txt";
 
-        // String filePath="C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\antlr\\product-display.component.txt";
+      //   String filePath="C:\\Users\\Yamen\\IdeaProjects\\Finalangular\\src\\antlr\\product-display.component.txt";
         try {
             CharStream source = CharStreams.fromFileName(filePath);
             AngularLexer lexer = new AngularLexer(source);

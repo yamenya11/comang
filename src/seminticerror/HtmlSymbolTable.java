@@ -19,7 +19,7 @@ public class HtmlSymbolTable {
     public void addSymbol(SymbolEntry entry) {
         if (entry.getType() == SymbolType.TAG) {
             tagSymbols.put(entry.getValue(), entry);
-            symbols.add(entry); // حفظ في القائمة العامة
+            symbols.add(entry);
         }
     }
 

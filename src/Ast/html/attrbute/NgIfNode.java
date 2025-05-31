@@ -1,13 +1,28 @@
 package Ast.html.attrbute;
 
+import Ast.Node;
+
 public class NgIfNode  extends AngularAttributeNode {
 
-    public NgIfNode(String expression) {
-        super("*ngIf", expression);
+    private Node condition;
+    private Node body;
+
+    public NgIfNode(Node condition, Node body) {
+        super("*ngIf", condition.toString());
+        this.condition = condition;
+        this.body = body;
+    }
+
+    public Node getCondition() {
+        return condition;
+    }
+
+    public Node getBody() {
+        return body;
     }
 
     @Override
     public String toString() {
-        return "NgIfNode{expression='" + value + "'}";
+        return "NgIfNode{condition=" + condition + ", body=" + body + "}";
     }
 }

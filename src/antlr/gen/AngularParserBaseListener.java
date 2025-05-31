@@ -556,6 +556,18 @@ public class AngularParserBaseListener implements AngularParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterTypeVarible(AngularParser.TypeVaribleContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTypeVarible(AngularParser.TypeVaribleContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterEmptyArrayDeclaration(AngularParser.EmptyArrayDeclarationContext ctx) { }
 	/**
 	 * {@inheritDoc}

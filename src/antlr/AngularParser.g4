@@ -93,7 +93,7 @@
                  |ONINIT       #ONINITLABEL
                  |NULL         #NULLLABEL
                 ;
-            classBody  : (propertyDeclaration | methodDeclaration | constructor | statement | decorator | ngOnInit | selectProduct | onbutton | getproduct | products | lambdaExpression|propertyAccess|functionDeclaration)*  #ClassBodyLabel;
+            classBody  : (propertyDeclaration | methodDeclaration | constructor | statement | decorator | ngOnInit | selectProduct | onbutton | getproduct | products | lambdaExpression|propertyAccess|functionDeclaration|whileStatement)*  #ClassBodyLabel;
 
          propertyDeclaration
              : regularProperty    #PROPIRTYLABEL
@@ -101,31 +101,36 @@
              | emptyArrayDeclaration  #DDD
              ;
 
-          regularProperty
-              : IDENTIFIER COLON value (EQUALS expression)? SEMICOLON
-              ;
-          letDeclaration
-              : LET IDENTIFIER COLON value EQUALS value SEMICOLON
-              ;
-          emptyArrayDeclaration
-              : IDENTIFIER COLON value OPEN_SQUARE CLOSE_SQUARE EQUALS OPEN_SQUARE CLOSE_SQUARE SEMICOLON
-              ;
+              regularProperty
+                  : IDENTIFIER COLON value (EQUALS expression)? SEMICOLON
+                  ;
+              letDeclaration
+                  : typeVarible IDENTIFIER COLON value EQUALS value SEMICOLON
+                  ;
+                  typeVarible:
+                  LET    #LETTERMINALLABEL
+                  |VAR    #VARTERMINALLABEL
+                  |CONST    #CONSTTERMINALLABEL
+                  ;
+              emptyArrayDeclaration
+                  : IDENTIFIER COLON value OPEN_SQUARE CLOSE_SQUARE EQUALS OPEN_SQUARE CLOSE_SQUARE SEMICOLON
+                  ;
 
-          constructor  : CONSTRUCTOR OPEN_PAREN (parameter (COMMA parameter)*)? CLOSE_PAREN OPEN_CURLY  statement*  CLOSE_CURLY  ;
+              constructor  : CONSTRUCTOR OPEN_PAREN (parameter (COMMA parameter)*)? CLOSE_PAREN OPEN_CURLY  statement*  CLOSE_CURLY  ;
 
 
-         loopStatement
-              : FOR OPEN_PAREN LET IDENTIFIER EQUALS expression SEMICOLON expression SEMICOLON IDENTIFIER (PLUS_PLUS | MINUS_MINUS) CLOSE_PAREN OPEN_CURLY statement* CLOSE_CURLY
-              | FOR OPEN_PAREN LET IDENTIFIER IN IDENTIFIER (DOT IDENTIFIER)* CLOSE_PAREN OPEN_CURLY statement* CLOSE_CURLY
-              ;
-         whileStatement
-                    : WHILE OPEN_PAREN expression CLOSE_PAREN OPEN_CURLY statement* CLOSE_CURLY;
+             loopStatement
+                  : FOR OPEN_PAREN LET IDENTIFIER EQUALS expression SEMICOLON expression SEMICOLON IDENTIFIER (PLUS_PLUS | MINUS_MINUS)  CLOSE_PAREN  OPEN_CURLY statement* CLOSE_CURLY  (ELSE OPEN_CURLY statement* CLOSE_CURLY)?
+                  | FOR OPEN_PAREN LET IDENTIFIER IN IDENTIFIER (DOT IDENTIFIER)* CLOSE_PAREN OPEN_CURLY statement* CLOSE_CURLY
+                  ;
+             whileStatement
+                        : WHILE OPEN_PAREN expression CLOSE_PAREN OPEN_CURLY statement* CLOSE_CURLY;
 
-          switchStatement
-                    : SWITCH OPEN_PAREN expression CLOSE_PAREN OPEN_CURLY caseClause* CLOSE_CURLY;
-          ifStatement
-                    : IF OPEN_PAREN equalityExpression CLOSE_PAREN OPEN_CURLY statement* CLOSE_CURLY
-                      (ELSE OPEN_CURLY statement* CLOSE_CURLY)?;
+              switchStatement
+                        : SWITCH OPEN_PAREN expression CLOSE_PAREN OPEN_CURLY caseClause* CLOSE_CURLY;
+              ifStatement
+                        : IF OPEN_PAREN equalityExpression CLOSE_PAREN OPEN_CURLY statement* CLOSE_CURLY
+                          (ELSE OPEN_CURLY statement* CLOSE_CURLY)?;
 
                 equalityExpression
                     : expression EQUALS EQUALS EQUALS expression # StrictEquality
@@ -153,21 +158,7 @@
                    | PUBLIC
                    | PROTECTED;
 
-//             statement
-//                 : expression SEMICOLON
-//                //  |propertyAccess
-//                 | ifStatement
-//                 | loopStatement
-//                 | switchStatement
-//                 | methodDeclaration
-//                 | propertyDeclaration
-//                 | functionCall SEMICOLON
-//                 | IDENTIFIER EQUALS expression SEMICOLON
-//                 |returnStatement
-//                 |propertyAccess
-//                 |propertystatment
 //
-//                 ;
               statement
                   : IDENTIFIER COLON statement                            # LABELED_STATEMENT
                   | expression SEMICOLON                                  # EXPRESSION_STATEMENT
@@ -181,6 +172,7 @@
                   | returnStatement                                        # RETURN_STATEMENT
                   | propertyAccess                                         # PROPERTY_ACCESS_STATEMENT
                   | propertystatment                                       # CONSOLE_STATEMENT
+
                   ;
 
 
@@ -275,7 +267,7 @@
                 : expression (COMMA expression)*;
 
             ngOnInit
-                : NGONINIT OPEN_PAREN CLOSE_PAREN COLON VOID OPEN_CURLY (expression ) CLOSE_CURLY;
+                : NGONINIT OPEN_PAREN CLOSE_PAREN COLON VOID OPEN_CURLY (expression SEMICOLON ) CLOSE_CURLY;
             lambdaExpression
                 :IDENTIFIER EQUALS'(' IDENTIFIER')' ARROW functionBody
                 | OPEN_PAREN parameterList? CLOSE_PAREN ARROW functionBody
