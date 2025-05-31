@@ -38,6 +38,7 @@
                    |selector         #SELECTORLABEL
                    |templateurl      #TAMPLATEURLLABEL
                    |providin   #PROVIDINLABEL
+                   |styleUrl    #STYLEURLLABEL
                ;
            providin:PROVIDEDIN COLON STRING;
 
@@ -54,6 +55,7 @@
            htmlMetadata
                : TEMPLATE COLON BACKTICK htmlElement* BACKTICK
                ;
+               styleUrl:STYLEURLS COLON OPEN_SQUARE BACKTICK stylesheet BACKTICK  CLOSE_SQUARE;
 
            classDeclaration
                : EXPORT CLASS IDENTIFIER classInheritance? OPEN_CURLY classBody CLOSE_CURLY   ;
@@ -98,7 +100,7 @@
          propertyDeclaration
              : regularProperty    #PROPIRTYLABEL
              | letDeclaration     #VARIBALLABEL
-             | emptyArrayDeclaration  #DDD
+             | emptyArrayDeclaration   #DDD
              ;
 
               regularProperty
@@ -108,8 +110,8 @@
                   : typeVarible IDENTIFIER COLON value EQUALS value SEMICOLON
                   ;
                   typeVarible:
-                  LET    #LETTERMINALLABEL
-                  |VAR    #VARTERMINALLABEL
+                  LET       #LETTERMINALLABEL
+                  |VAR      #VARTERMINALLABEL
                   |CONST    #CONSTTERMINALLABEL
                   ;
               emptyArrayDeclaration
@@ -341,3 +343,43 @@
                |COLON
                |LS
                ;
+///////////////////////////////////////////
+stylesheet : ruleSet+ ;
+
+ruleSet
+    : selector1 OPEN_CURLY declaration+ CLOSE_CURLY
+    ;
+    selector1
+        : classSelector
+        | idSelector
+        | pseudoClassSelector
+        ;
+       classSelector
+           : '.' IDENTIFIER
+           ;
+          idSelector
+              : HASH IDENTIFIER
+              ;
+
+          pseudoClassSelector
+              : classSelector ':' IDENTIFIER
+              ;
+
+            declaration
+                : property COLON value1 SEMICOLON
+                ;
+
+            property
+                : IDENTIFIER ('-' IDENTIFIER)*
+                ;
+
+            value1
+                : NUMBER UNIT?
+                | COLOR
+                | IDENTIFIER
+                | STRING
+                | cssFunction
+                ;
+                cssFunction
+                    : IDENTIFIER OPEN_PAREN value1 CLOSE_PAREN
+                    ;

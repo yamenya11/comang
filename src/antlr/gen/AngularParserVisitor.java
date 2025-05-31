@@ -110,6 +110,13 @@ public interface AngularParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitPROVIDINLABEL(AngularParser.PROVIDINLABELContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code STYLEURLLABEL}
+	 * labeled alternative in {@link AngularParser#metadataEntry}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSTYLEURLLABEL(AngularParser.STYLEURLLABELContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link AngularParser#providin}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -139,6 +146,12 @@ public interface AngularParserVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitHtmlMetadata(AngularParser.HtmlMetadataContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AngularParser#styleUrl}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStyleUrl(AngularParser.StyleUrlContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link AngularParser#classDeclaration}.
 	 * @param ctx the parse tree
@@ -305,11 +318,26 @@ public interface AngularParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitLetDeclaration(AngularParser.LetDeclarationContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link AngularParser#typeVarible}.
+	 * Visit a parse tree produced by the {@code LETTERMINALLABEL}
+	 * labeled alternative in {@link AngularParser#typeVarible}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitTypeVarible(AngularParser.TypeVaribleContext ctx);
+	T visitLETTERMINALLABEL(AngularParser.LETTERMINALLABELContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code VARTERMINALLABEL}
+	 * labeled alternative in {@link AngularParser#typeVarible}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitVARTERMINALLABEL(AngularParser.VARTERMINALLABELContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code CONSTTERMINALLABEL}
+	 * labeled alternative in {@link AngularParser#typeVarible}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCONSTTERMINALLABEL(AngularParser.CONSTTERMINALLABELContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link AngularParser#emptyArrayDeclaration}.
 	 * @param ctx the parse tree
@@ -966,4 +994,64 @@ public interface AngularParserVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitTextNode(AngularParser.TextNodeContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AngularParser#stylesheet}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStylesheet(AngularParser.StylesheetContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AngularParser#ruleSet}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRuleSet(AngularParser.RuleSetContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AngularParser#selector1}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSelector1(AngularParser.Selector1Context ctx);
+	/**
+	 * Visit a parse tree produced by {@link AngularParser#classSelector}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitClassSelector(AngularParser.ClassSelectorContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AngularParser#idSelector}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIdSelector(AngularParser.IdSelectorContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AngularParser#pseudoClassSelector}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPseudoClassSelector(AngularParser.PseudoClassSelectorContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AngularParser#declaration}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDeclaration(AngularParser.DeclarationContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AngularParser#property}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitProperty(AngularParser.PropertyContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AngularParser#value1}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitValue1(AngularParser.Value1Context ctx);
+	/**
+	 * Visit a parse tree produced by {@link AngularParser#cssFunction}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCssFunction(AngularParser.CssFunctionContext ctx);
 }

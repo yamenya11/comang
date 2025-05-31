@@ -4,7 +4,7 @@ import Ast.application.*;
 import Ast.calls.*;
 import Ast.components.ComponentNode;
 import Ast.declarations.ClassDeclarationNode;
-
+import Ast.types.*;
 import Ast.declarations.ExtendClauseNode;
 import Ast.declarations.ImplementClauseNode;
 import Ast.expressions.*;
@@ -42,6 +42,7 @@ import java.nio.file.Paths;
 import java.util.*;
 
 import org.antlr.v4.runtime.CommonTokenStream;
+import terminal.TypeTeminal;
 
 public class AngularASTBuilder extends AngularParserBaseVisitor<Node> {
     private final SymbolTable symbolTable;
@@ -128,6 +129,24 @@ public class AngularASTBuilder extends AngularParserBaseVisitor<Node> {
         return classBodyNode;
     }
 
+
+    @Override
+    public Node visitLETTERMINALLABEL(AngularParser.LETTERMINALLABELContext ctx) {
+        String type=ctx.LET().getText();
+        return new TypeTeminal(type);
+    }
+
+    @Override
+    public Node visitVARTERMINALLABEL(AngularParser.VARTERMINALLABELContext ctx) {
+        String type=ctx.VAR().getText();
+        return new TypeTeminal(type);
+    }
+
+    @Override
+    public Node visitCONSTTERMINALLABEL(AngularParser.CONSTTERMINALLABELContext ctx) {
+        String type=ctx.CONST().getText();
+        return new TypeTeminal(type);
+    }
 
     @Override
     public Node visitInjectable(AngularParser.InjectableContext ctx) {
@@ -303,14 +322,21 @@ public class AngularASTBuilder extends AngularParserBaseVisitor<Node> {
     @Override
     public Node visitProducts(AngularParser.ProductsContext ctx) {
         String id = ctx.IDENTIFIER().getText();
+        Node elementsNode = visit(ctx.elementList());
 
         symbolTable.addSymbol(new SymbolEntry(id, SymbolType.FUNCTION, null, symbolTable.getCurrentScope()));
+
         symbolTable.enterScope(id);
 
-        ElementListNode elements = (ElementListNode) visit(ctx.elementList());
+        ProductsNode productsNode = null;
+
+        if (elementsNode instanceof ElementListNode) {
+            productsNode = new ProductsNode(id, (ElementListNode) elementsNode);
+        }
+
         symbolTable.exitScope();
 
-        return new  ProductsNode(id,elements);    }
+        return productsNode;  }
 
 
 
@@ -335,23 +361,65 @@ public class AngularASTBuilder extends AngularParserBaseVisitor<Node> {
         List<PairNode> pairs = new ArrayList<>();
 
         for (AngularParser.PairContext pairCtx : ctx.pair()) {
-            pairs.add((PairNode) visit(pairCtx));
+            Node pairNode = visit(pairCtx);
+            if (pairNode instanceof PairNode) {
+                pairs.add((PairNode) pairNode);
+            }
         }
 
-        return new ElementNode(pairs);    }
+        return new ElementNode(pairs);     }
 
 
     @Override
     public Node visitPair(AngularParser.PairContext ctx) {
-        String key=ctx.basevalue().getText();
-        String value=ctx.value().getText();
-        symbolTable.addSymbol(new SymbolEntry(key, SymbolType.PARAMETER, value, symbolTable.getCurrentScope()));
+        Node keyNode = visit(ctx.basevalue());
+        Node valueNode = visit(ctx.value());
 
-        return new PairNode(key,value);
+        List<Node> keyList = new ArrayList<>();
+        keyList.add(keyNode);
+
+        String valueStr = valueNode.toString();
+
+        symbolTable.addSymbol(new SymbolEntry(ctx.basevalue().getText(), SymbolType.PARAMETER, valueStr, symbolTable.getCurrentScope()));
+
+        return new PairNode(keyList, valueStr);
 
     }
 
+    @Override
+    public Node visitIDENTIFIRELABEL(AngularParser.IDENTIFIRELABELContext ctx) {
+        return new IdentifierNode(ctx.IDENTIFIER().getText());
+    }
 
+    @Override
+    public Node visitSTRINGLABEL(AngularParser.STRINGLABELContext ctx) {
+        String value = ctx.STRING().getText().replaceAll("^\"|\"$", "");
+        return new StringNode(value);
+    }
+
+    @Override
+    public Node visitNUMBERLABEL(AngularParser.NUMBERLABELContext ctx) {
+        return new NumberNode(ctx.NUMBER().getText());    }
+
+    @Override
+    public Node visitANYLABEL(AngularParser.ANYLABELContext ctx) {
+        return new AnyNode();
+    }
+
+    @Override
+    public Node visitONINITLABEL(AngularParser.ONINITLABELContext ctx) {
+        return new VoidNode();
+    }
+
+    @Override
+    public Node visitVOIDLABEL(AngularParser.VOIDLABELContext ctx) {
+        return new OnInitNode();
+    }
+
+    @Override
+    public Node visitNULLLABEL(AngularParser.NULLLABELContext ctx) {
+        return new NullNode();
+    }
 
     @Override
     public Node visitConstructor(AngularParser.ConstructorContext ctx) {
@@ -783,8 +851,6 @@ symbolTable.exitScope();
                 applicationNodes.add(node);
             }
         }
-
-
         return new ApplicationNode(applicationNodes);
     }
 
@@ -800,10 +866,14 @@ symbolTable.exitScope();
     @Override
     public Node visitLetDeclaration(AngularParser.LetDeclarationContext ctx) {
         String name = ctx.IDENTIFIER().getText();
-        String type = ctx.value(0).getText();
-        String value = ctx.value(1).getText();
-
-        return new LetVariableDeclarationNode(name, type, value);    }
+        String value = ctx.value(0).getText();
+        String assist = ctx.value(1).getText();
+        List<TypeTeminal> type =new ArrayList<>();
+        Node typeNode = visit(ctx.typeVarible());
+        if (typeNode instanceof TypeTeminal) {
+            type.add((TypeTeminal) typeNode);
+        }
+        return new LetVariableDeclarationNode(type,name, value,assist);    }
 
     @Override
     public Node visitEmptyArrayDeclaration(AngularParser.EmptyArrayDeclarationContext ctx) {

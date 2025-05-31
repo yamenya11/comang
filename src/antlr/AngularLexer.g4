@@ -45,7 +45,7 @@ INPUT : '@Input';
 OUTPUT : '@Output';
 Input: 'input';
 NEW : 'new';
-
+UNIT : ('px'|'em'|'%'|'rem'|'vh'|'vw');
 IMPLEMENTS:'implements';
 EXTENDS :'extends';
 ONINIT :'OnInit';
@@ -62,6 +62,8 @@ COMMA: ',';
 SEMICOLON : ';';
 EQUALS : '=';
 OR_OPERATOR: '|';
+COLOR : '#' [0-9a-fA-F]+;
+HASH : '#';
 NOT_EQUAL: '!=';
 STRICT_NOT_EQUAL: '!==';
 BACKTICK:'`';
@@ -73,11 +75,11 @@ STRING
     ;
     PLUS_PLUS: '++';
     MINUS_MINUS: '--';
-NUMBER: [0-9]+;  // دعم الأرقام
+NUMBER: [0-9]+ ('.' [0-9]+)?;  // دعم الأرقام
 INTEGER : [0-9]+;
 PRICE: [0-9]+;
 IDENTIFIER
-    : [a-zA-Z_] [a-zA-Z0-9_]* // تعريف معرفات مثل ngFor
+    : [a-zA-Z_] [a-zA-Z0-9_-]* // تعريف معرفات مثل ngFor
     ;
 
 

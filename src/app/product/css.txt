@@ -1,0 +1,74 @@
+import { Component } from '@angular/core';
+
+import { Component } from "angular/core";
+import { OnInit } from "angular/core";
+
+
+@Component({
+  // selector: 'app_root',
+  selector: '99hello',
+   styleUrls:[`
+    .container {
+      width: 100px;
+      height: 200px;
+      background-color: #f5f5f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #main-title {
+      font-size: 24px;
+      color: #333;
+      text-align: center;
+    }
+
+    .button-primary:hover {
+      background-color: #007bff;
+      color: white;
+      transform: scale(1.05);
+    }
+  `],
+templateUrl:'src/app/product/product.component.html',
+  template: `<div *ngFor="let product of products">
+               <h1>{{ product.name }}</p>
+                 <v>السعر: {{ product.price }} ل س</v>
+                 <button (click)="selectProduct(product)">عرض التفاصيل</button>
+                  <img [src]="product.image" alt="{{ product.name }}" />
+             </div>
+             <div *ngIf="selectedProduct">
+                 <h1>تفاصيل المنتج</h1>
+                 <p>الاسم: {{ selectedProduct.name }}</p>
+                 <p>السعر: {{ selectedProduct.price }} ل س</p>
+             </div>`
+
+})
+
+export class AppComponent extends jnjk {
+let myVar: string = "Hello";
+
+constructor(private productService: ProductService) {
+    this.products = this.productService.getProducts();
+  }
+  products = [
+    { id: 1, name: 'منتج 1', image: 'assets/product1.jpg', details: 'تفاصيل المنتج 1' },
+    { id: 2, name: 'منتج 2', image: 'assets/product2.jpg', details: 'تفاصيل المنتج 2' },
+    { id: 3, name: 'منتج 3', image: 'assets/product3.jpg', details: 'تفاصيل المنتج 3' },
+    { id: 4, name: 'منتج 4', image: 'assets/product4.jpg', details: 'تفاصيل المنتج 4' }
+  ];
+
+  selectedProduct: any = null;
+
+  selectProduct(product: any): void {
+    this.selectedProduct = product;
+  }
+function add(a: number, b: number): number {
+    return a + b;
+}
+function logMessage(): void {
+    console.log("No return value");
+}
+
+}export class AppComponent {
+ let myVar: string = "Hello";
+ }

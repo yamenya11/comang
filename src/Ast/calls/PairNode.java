@@ -8,16 +8,18 @@ import Ast.Node;
 
 import Ast.Node;
 
+import java.util.List;
+
 public class PairNode extends Node {
-    private String key;
+    private List<Node> key;
     private String value;
 
-    public PairNode(String key, String value) {
+    public PairNode(List<Node> key, String value) {
         this.key = key;
         this.value = value;
     }
 
-    public String getKey() {
+    public List<Node> getKey() {
         return key;
     }
 

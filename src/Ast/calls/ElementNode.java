@@ -4,7 +4,7 @@ import Ast.Node;
 import java.util.List;
 
 public class ElementNode extends Node {
-    private List<PairNode> pairs;
+        private List<PairNode> pairs;
 
     public ElementNode(List<PairNode> pairs) {
         this.pairs = pairs;
