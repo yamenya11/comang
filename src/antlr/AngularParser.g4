@@ -25,8 +25,8 @@
                ;
 
            injectable :INJECTABLE OPEN_PAREN OPEN_CURLY
-                metadata
-                CLOSE_CURLY CLOSE_PAREN ;
+                      metadata
+                      CLOSE_CURLY CLOSE_PAREN ;
 
            metadata
                : metadataEntry? (COMMA metadataEntry)*
@@ -59,9 +59,14 @@
                : EXPORT CLASS IDENTIFIER classInheritance? OPEN_CURLY classBody CLOSE_CURLY   ;
 
            classInheritance
-                   : EXTENDS IDENTIFIER
-                   | IMPLEMENTS value (COMMA IDENTIFIER)*
-               ;
+
+           :extendClause  #EXTENDSLABEL
+           |implementClause   #IMPLEMITIONLABEL
+           ;
+
+         extendClause  : EXTENDS IDENTIFIER;
+         implementClause  :IMPLEMENTS value (COMMA IDENTIFIER)*
+       ;
 
 
           getproduct: GET_PRODUCTS OPEN_PAREN CLOSE_PAREN OPEN_CURLY RETURN OPEN_SQUARE elementList CLOSE_SQUARE SEMICOLON CLOSE_CURLY ;

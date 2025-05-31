@@ -236,15 +236,49 @@ public interface AngularParserListener extends ParseTreeListener {
 	 */
 	void exitClassDeclaration(AngularParser.ClassDeclarationContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link AngularParser#classInheritance}.
+	 * Enter a parse tree produced by the {@code EXTENDSLABEL}
+	 * labeled alternative in {@link AngularParser#classInheritance}.
 	 * @param ctx the parse tree
 	 */
-	void enterClassInheritance(AngularParser.ClassInheritanceContext ctx);
+	void enterEXTENDSLABEL(AngularParser.EXTENDSLABELContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link AngularParser#classInheritance}.
+	 * Exit a parse tree produced by the {@code EXTENDSLABEL}
+	 * labeled alternative in {@link AngularParser#classInheritance}.
 	 * @param ctx the parse tree
 	 */
-	void exitClassInheritance(AngularParser.ClassInheritanceContext ctx);
+	void exitEXTENDSLABEL(AngularParser.EXTENDSLABELContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code IMPLEMITIONLABEL}
+	 * labeled alternative in {@link AngularParser#classInheritance}.
+	 * @param ctx the parse tree
+	 */
+	void enterIMPLEMITIONLABEL(AngularParser.IMPLEMITIONLABELContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code IMPLEMITIONLABEL}
+	 * labeled alternative in {@link AngularParser#classInheritance}.
+	 * @param ctx the parse tree
+	 */
+	void exitIMPLEMITIONLABEL(AngularParser.IMPLEMITIONLABELContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link AngularParser#extendClause}.
+	 * @param ctx the parse tree
+	 */
+	void enterExtendClause(AngularParser.ExtendClauseContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link AngularParser#extendClause}.
+	 * @param ctx the parse tree
+	 */
+	void exitExtendClause(AngularParser.ExtendClauseContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link AngularParser#implementClause}.
+	 * @param ctx the parse tree
+	 */
+	void enterImplementClause(AngularParser.ImplementClauseContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link AngularParser#implementClause}.
+	 * @param ctx the parse tree
+	 */
+	void exitImplementClause(AngularParser.ImplementClauseContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link AngularParser#getproduct}.
 	 * @param ctx the parse tree

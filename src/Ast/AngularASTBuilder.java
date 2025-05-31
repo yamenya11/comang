@@ -5,6 +5,8 @@ import Ast.calls.*;
 import Ast.components.ComponentNode;
 import Ast.declarations.ClassDeclarationNode;
 
+import Ast.declarations.ExtendClauseNode;
+import Ast.declarations.ImplementClauseNode;
 import Ast.expressions.ExpressionNode;
 import Ast.function.FUNDECLRATIONNODE;
 import Ast.function.FunctionBodyNode;
@@ -52,32 +54,6 @@ public class AngularASTBuilder extends AngularParserBaseVisitor<Node> {
     private final ClassSymbolTable classSymbolTable ;
     private final ErrorHandler errorHandler;
 
-    /*@Override
-    public Node visitApplication(AngularParser.ApplicationContext ctx) {
-        List<Node> applicationNodes = new ArrayList<>();
-        for (var importCtx : ctx.importStatement()) {
-            applicationNodes.add(visit(importCtx));
-        }
-
-        for (var componentCtx : ctx.component()) {
-            applicationNodes.add(visit(componentCtx));
-        }
-
-        for (var classDeclCtx : ctx.classDeclaration()) {
-            applicationNodes.add(visit(classDeclCtx));
-        }
-
-        for (var injectableCtx : ctx.injectable()) {
-            applicationNodes.add(visit(injectableCtx));
-        }
-
-        for (var statementCtx : ctx.statement()) {
-            applicationNodes.add(visit(statementCtx));
-        }
-
-
-        return new ApplicationNode(applicationNodes);
-    }*/
 
 
     @Override
@@ -97,13 +73,12 @@ public class AngularASTBuilder extends AngularParserBaseVisitor<Node> {
             importedList.add(key.getText().trim());
         }
         String imported = String.join(", ", importedList);
-
         String rawSource = ctx.importStatement().STRING().getText();
         String source = rawSource.substring(1, rawSource.length() - 1);
 
         String scope = symbolTable.getCurrentScope();
         symbolTable.addSymbol(new SymbolEntry(imported, SymbolType.IMPORT, source, scope));
-List<KeyImportNode>app=new ArrayList<>();
+       List<KeyImportNode>app=new ArrayList<>();
       for (var v :ctx.importStatement().keyimport()){
        app.add((KeyImportNode) visit(v));
      }
@@ -111,20 +86,7 @@ List<KeyImportNode>app=new ArrayList<>();
         return importStatementNode;
     }
 
-    @Override
-    public Node visitCOMPONENTLABEL(AngularParser.COMPONENTLABELContext ctx) {
-        String componentName = ctx.component().getText().toString();
 
-        List<MetadataEntryNode> meta = new ArrayList<>();
-
-        if (ctx.component().metadata() != null && !ctx.component().metadata().isEmpty()) {
-            for (var entryCtx : ctx.component().metadata().metadataEntry()) {
-                MetadataEntryNode entryNode = (MetadataEntryNode) visit(entryCtx); // visit each metadata entry
-                meta.add(entryNode);
-            }
-        }
-        return new ComponentNode(componentName, meta);
-    }
 
 
 
@@ -147,30 +109,22 @@ List<KeyImportNode>app=new ArrayList<>();
         return classBodyNode;
     }
 
-    @Override
-    public Node visitINJECTABLELABEL(AngularParser.INJECTABLELABELContext ctx) {
-        String injectableName = ctx.injectable().getText();
-        symbolTable.addSymbol(new SymbolEntry(injectableName, SymbolType.INJECTABLE, null, symbolTable.getCurrentScope()));
-        return new InjectableLabelNode(injectableName) ;
-    }
 
-//  @Override
-//    public Node visitImportStatement(AngularParser.ImportStatementContext ctx) {
-//        String imported = ctx.IDENTIFIER().getText();
-//        String source = ctx.STRING().getText();
-//        String key=ctx.keyimport().get(0).getText();
-//        String scope = symbolTable.getCurrentScope();
-//        symbolTable.addSymbol(new SymbolEntry(imported, SymbolType.IMPORT, key,scope));
-//        ImportStatementNode importStatementNode = new ImportStatementNode(imported, source,key);
-//        return importStatementNode;
-//    }
+    @Override
+    public Node visitInjectable(AngularParser.InjectableContext ctx) {
+        String injectableName = ctx.INJECTABLE().getText();
+        List<MetadataEntryNode> metadataEntries = new ArrayList<>();
+        for (var entCtx : ctx.metadata().metadataEntry()) {
+            metadataEntries.add((MetadataEntryNode) visit(entCtx));
+        }
+        symbolTable.addSymbol(new SymbolEntry(injectableName, SymbolType.INJECTABLE, null, symbolTable.getCurrentScope()));
+        return new InjectableLabelNode(injectableName,metadataEntries) ;    }
 
 
     @Override
     public Node visitComponent(AngularParser.ComponentContext ctx) {
         String componentName = ctx.COMPONENT().getText();
 
-       String vv = ctx.metadata().getText();
 //warning
         List<MetadataEntryNode> metadataEntries = new ArrayList<>();
         for (var entCtx : ctx.metadata().metadataEntry()) {
@@ -187,6 +141,19 @@ List<KeyImportNode>app=new ArrayList<>();
         }
         return new MetadataNode(entry);
         }
+
+    @Override
+    public Node visitProvidin(AngularParser.ProvidinContext ctx) {
+        String key = ctx.PROVIDEDIN().getText();
+        String value = ctx.STRING().getText().replaceAll("^\"|\"$", "");
+
+
+
+        String scope = symbolTable.getCurrentScope();
+        symbolTable.addSymbol(new SymbolEntry(key, SymbolType.METADATA, value, scope));
+
+        return new Provedin(key, value);
+    }
 
     @Override
     public Node visitBasicMetadata(AngularParser.BasicMetadataContext ctx) {
@@ -227,8 +194,8 @@ List<KeyImportNode>app=new ArrayList<>();
 
         String superClass = null;
         if (ctx.classInheritance() != null) {
-            if (ctx.classInheritance().IDENTIFIER() != null && !ctx.classInheritance().IDENTIFIER().isEmpty()) {
-                superClass = ctx.classInheritance().IDENTIFIER(0).getText();
+            if (ctx.classInheritance() != null && !ctx.classInheritance().isEmpty()) {
+                superClass = ctx.classInheritance().getText();
             }
         }
 
@@ -246,6 +213,19 @@ List<KeyImportNode>app=new ArrayList<>();
 
         return new ClassDeclarationNode(className, superClass, classBodyElements);
     }
+
+    @Override
+    public Node visitExtendClause(AngularParser.ExtendClauseContext ctx) {
+        String superClassName = ctx.EXTENDS().getText();
+        return new ExtendClauseNode(superClassName);
+    }
+
+    @Override
+    public Node visitImplementClause(AngularParser.ImplementClauseContext ctx) {
+        List<String> interfaceNames = new ArrayList<>();
+        interfaceNames.add(ctx.IMPLEMENTS().getText());
+
+        return new ImplementClauseNode(interfaceNames);    }
 
     @Override
     public Node visitSelector(AngularParser.SelectorContext ctx) {
@@ -277,45 +257,7 @@ List<KeyImportNode>app=new ArrayList<>();
         return new TemplateUrlNode(key, value);
     }
 
-// @Override
-//    public Node visitClassBodyLabel(AngularParser.ClassBodyLabelContext ctx) {
-//        List<Node> classElements = new ArrayList<>();
-//        ClassBodyNode clss = new ClassBodyNode();
-//        for (var property : ctx.propertyDeclaration()) {
-//            classElements.add(visit(property));
-//        }
-//        for (var method : ctx.methodDeclaration()) {
-//            classElements.add(visit(method));
-//        }
-//        for (var constructor : ctx.constructor()) {
-//            classElements.add(visit(constructor));
-//        }
-//        for (var statement : ctx.statement()) {
-//            classElements.add(visit(statement));
-//        }
-//        for (var decorator : ctx.decorator()) {
-//            classElements.add(visit(decorator));
-//        }
-//        for (var ngOnInit : ctx.ngOnInit()) {
-//            classElements.add(visit(ngOnInit));
-//        }
-//        for (var selectProduct : ctx.selectProduct()) {
-//            classElements.add(visit(selectProduct));
-//        }
-//        for (var onbutton : ctx.onbutton()) {
-//            classElements.add(visit(onbutton));
-//        }
-//
-//
-//        for (var product : ctx.products()) {
-//            classElements.add(visit(product));
-//        }
-//        for (var lambda : ctx.lambdaExpression()) {
-//            classElements.add(visit(lambda));
-//        }
-//        clss.setClassElements(classElements);
-//        return clss;
-//    }
+
 
 
 
@@ -327,10 +269,13 @@ List<KeyImportNode>app=new ArrayList<>();
 
         return new  ProductsNode(id,elements);    }
 
-    @Override
-    public Node visitInjectable(AngularParser.InjectableContext ctx) {
-        return super.visitInjectable(ctx);
-    }
+
+
+
+
+
+
+
 
     @Override
     public Node visitElementList(AngularParser.ElementListContext ctx) {
@@ -402,6 +347,46 @@ List<KeyImportNode>app=new ArrayList<>();
         return new ConstructorNode(constructorName, parameters, statements);   }
 
 
+
+    @Override
+    public Node visitLoopStatement(AngularParser.LoopStatementContext ctx) {
+        return super.visitLoopStatement(ctx);
+    }
+
+    @Override
+    public Node visitWhileStatement(AngularParser.WhileStatementContext ctx) {
+        return super.visitWhileStatement(ctx);
+    }
+
+    @Override
+    public Node visitSwitchStatement(AngularParser.SwitchStatementContext ctx) {
+        return super.visitSwitchStatement(ctx);
+    }
+
+    @Override
+    public Node visitIfStatement(AngularParser.IfStatementContext ctx) {
+        return super.visitIfStatement(ctx);
+    }
+
+    @Override
+    public Node visitStrictEquality(AngularParser.StrictEqualityContext ctx) {
+        return super.visitStrictEquality(ctx);
+    }
+
+    @Override
+    public Node visitLooseEquality(AngularParser.LooseEqualityContext ctx) {
+        return super.visitLooseEquality(ctx);
+    }
+
+    @Override
+    public Node visitNotEquality(AngularParser.NotEqualityContext ctx) {
+        return super.visitNotEquality(ctx);
+    }
+
+    @Override
+    public Node visitStrictNotEquality(AngularParser.StrictNotEqualityContext ctx) {
+        return super.visitStrictNotEquality(ctx);
+    }
 
     @Override
     public Node visitParameter(AngularParser.ParameterContext ctx) {

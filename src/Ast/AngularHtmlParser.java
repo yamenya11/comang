@@ -2,7 +2,7 @@ package Ast;
 
 import SymbolTable.SymbolTable;
 import org.antlr.v4.runtime.*;
-import antlr.gen.*; // تأكد من وجود ملفات ANTLR الخاصة بك
+import antlr.gen.*;
 import seminticerror.*;
 
 public class AngularHtmlParser {

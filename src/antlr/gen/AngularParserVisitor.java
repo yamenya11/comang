@@ -146,11 +146,31 @@ public interface AngularParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitClassDeclaration(AngularParser.ClassDeclarationContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link AngularParser#classInheritance}.
+	 * Visit a parse tree produced by the {@code EXTENDSLABEL}
+	 * labeled alternative in {@link AngularParser#classInheritance}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitClassInheritance(AngularParser.ClassInheritanceContext ctx);
+	T visitEXTENDSLABEL(AngularParser.EXTENDSLABELContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code IMPLEMITIONLABEL}
+	 * labeled alternative in {@link AngularParser#classInheritance}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIMPLEMITIONLABEL(AngularParser.IMPLEMITIONLABELContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AngularParser#extendClause}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExtendClause(AngularParser.ExtendClauseContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AngularParser#implementClause}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitImplementClause(AngularParser.ImplementClauseContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link AngularParser#getproduct}.
 	 * @param ctx the parse tree

@@ -268,13 +268,49 @@ public class AngularParserBaseListener implements AngularParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterClassInheritance(AngularParser.ClassInheritanceContext ctx) { }
+	@Override public void enterEXTENDSLABEL(AngularParser.EXTENDSLABELContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitClassInheritance(AngularParser.ClassInheritanceContext ctx) { }
+	@Override public void exitEXTENDSLABEL(AngularParser.EXTENDSLABELContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterIMPLEMITIONLABEL(AngularParser.IMPLEMITIONLABELContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIMPLEMITIONLABEL(AngularParser.IMPLEMITIONLABELContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterExtendClause(AngularParser.ExtendClauseContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExtendClause(AngularParser.ExtendClauseContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterImplementClause(AngularParser.ImplementClauseContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitImplementClause(AngularParser.ImplementClauseContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

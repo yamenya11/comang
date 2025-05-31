@@ -23,7 +23,7 @@ import { OnInit } from "angular/core";
 
 })
 
-export class AppComponent  {
+export class AppComponent extends jnjk {
 let myVar: string = "Hello";
 
 constructor(private productService: ProductService) {
