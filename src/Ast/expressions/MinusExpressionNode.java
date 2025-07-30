@@ -12,7 +12,7 @@ String mines;
 
     @Override
     public void accept(Node visitor) {
-
+visitor.accept(this);
     }
 
     @Override

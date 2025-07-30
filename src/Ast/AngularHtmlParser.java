@@ -18,8 +18,8 @@ public class AngularHtmlParser {
             Import importSymbols = new Import();
             SelectorSymbolTable selectorSymbolTable=new SelectorSymbolTable();
             HtmlSymbolTable html=new HtmlSymbolTable();
-
-            return (Node) new AngularASTBuilder(symbolTable,selectorSymbolTable, classSymbolTable, errorHandler,importSymbols,html).visit(parser.htmlContent());
+            FunctionSymbolTable fun=new FunctionSymbolTable();
+            return (Node) new AngularASTBuilder(symbolTable,selectorSymbolTable, classSymbolTable, errorHandler,importSymbols,html,fun).visit(parser.htmlContent());
         } catch (Exception e) {
             System.err.println("Error parsing HTML content: " + e.getMessage());
             return null;

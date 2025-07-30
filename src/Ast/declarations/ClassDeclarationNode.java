@@ -1,11 +1,6 @@
 package Ast.declarations;
 
-import Ast.ClassBodyNode;
 import Ast.Node;
-import Ast.methods.MethodDeclarationNode;
-import Ast.interfacee.PropertyDeclarationNode;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class ClassDeclarationNode extends Node {
@@ -13,14 +8,12 @@ public class ClassDeclarationNode extends Node {
     private String superClass;
     private List<Node> classBodyElements;
 
-
     public ClassDeclarationNode(String className, String superClass, List<Node> classBodyElements) {
         this.className = className;
         this.superClass = superClass;
         this.classBodyElements = classBodyElements;
     }
 
-    // Getter و Setter
     public String getClassName() {
         return className;
     }
@@ -37,6 +30,9 @@ public class ClassDeclarationNode extends Node {
         this.superClass = superClass;
     }
 
+    public List<Node> getClassBodyElements() {
+        return classBodyElements;
+    }
 
     @Override
     public String toString() {

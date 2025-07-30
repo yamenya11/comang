@@ -4,51 +4,45 @@ import Ast.Node;
 import Ast.expressions.ExpressionNode;
 import java.util.List;
 
+
 public class LambdaExpressionNode extends Node {
-    private String identifier;
-    private List<ExpressionNode> parameters;
-    private ExpressionNode functionBody;
+    private List<String> parameters;
+    private Node expressionBody;        // body إن كان تعبير واحد
+    private List<Node> blockBody;       // body إن كان بلوك من جمل (statements)
 
-    public LambdaExpressionNode(String identifier, ExpressionNode functionBody) {
-        this.identifier = identifier;
-        this.functionBody = functionBody;
-        this.parameters = null;
-    }
-
-    public LambdaExpressionNode(List<ExpressionNode> parameters, ExpressionNode functionBody) {
+    // constructor للتعبير الواحد
+    public LambdaExpressionNode(List<String> parameters, Node expressionBody) {
         this.parameters = parameters;
-        this.functionBody = functionBody;
-        this.identifier = null;
+        this.expressionBody = expressionBody;
+        this.blockBody = null;
     }
 
-    public String getIdentifier() {
-        return identifier;
+    // constructor للبلوك
+    public LambdaExpressionNode(List<String> parameters, List<Node> blockBody) {
+        this.parameters = parameters;
+        this.blockBody = blockBody;
+        this.expressionBody = null;
     }
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
-    }
-
-    public List<ExpressionNode> getParameters() {
+    public List<String> getParameters() {
         return parameters;
     }
 
-    public void setParameters(List<ExpressionNode> parameters) {
-        this.parameters = parameters;
+    public Node getExpressionBody() {
+        return expressionBody;
     }
 
-    public ExpressionNode getFunctionBody() {
-        return functionBody;
-    }
-
-    public void setFunctionBody(ExpressionNode functionBody) {
-        this.functionBody = functionBody;
+    public List<Node> getBlockBody() {
+        return blockBody;
     }
 
     @Override
     public String toString() {
-        String params = (parameters == null || parameters.isEmpty()) ? "" : parameters.toString();
-        return "LambdaExpression" + (identifier != null ? " " + identifier : "") + "(" + params + ") => " + functionBody;
+        if (expressionBody != null) {
+            return "LambdaExpression(" + parameters + ") => " + expressionBody;
+        } else {
+            return "LambdaExpression(" + parameters + ") => Block" + blockBody;
+        }
     }
 
     @Override
@@ -56,3 +50,4 @@ public class LambdaExpressionNode extends Node {
         visitor.accept(this);
     }
 }
+

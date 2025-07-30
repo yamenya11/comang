@@ -1,0 +1,31 @@
+import { Component } from '@angular/core';
+import { ProductService } from '../product.service';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-product-list',
+  template: `
+    <div *ngFor="product-grid">
+      <div *ngFor="let product of products$ | async" class="product-card">
+        <img [src]="product.image" [alt]="product.name">
+        <h3>{{ product.name }}</h3>
+        <p>السعر: {{ product.price }} ل.س</p>
+        <button (click)="viewDetails(product.id)">التفاصيل</button>
+      </div>
+    </div>
+    <button routerLink="/add">إضافة منتج</button>
+  `
+
+})
+export class ProductListComponent {
+  products$ = this.productService.products$;
+
+  constructor(
+    private productService: ProductService,
+    private router: Router
+  ) {}
+
+  viewDetails(id: number) {
+    this.router.navigate(['/product', id]);
+  }
+}

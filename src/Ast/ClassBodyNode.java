@@ -6,17 +6,17 @@ import java.util.List;
 public class ClassBodyNode extends Node {
     private List<Node> classElements;
 
-    // المُنشئ الافتراضي
+
     public ClassBodyNode() {
         this.classElements = new ArrayList<>();
     }
 
-    // مُنشئ لتحديد العناصر مباشرة
+
     public ClassBodyNode(List<Node> classElements) {
         this.classElements = (classElements != null) ? classElements : new ArrayList<>();
     }
 
-    // Getter و Setter
+
     public List<Node> getClassElements() {
         return classElements;
     }
@@ -25,14 +25,14 @@ public class ClassBodyNode extends Node {
         this.classElements = (classElements != null) ? classElements : new ArrayList<>();
     }
 
-    // إضافة عنصر جديد
+
     public void addClassElement(Node element) {
         if (element != null) {
             this.classElements.add(element);
         }
     }
 
-    // إزالة عنصر
+
     public void removeClassElement(Node element) {
         this.classElements.remove(element);
     }

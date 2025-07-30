@@ -28,5 +28,7 @@ public enum SymbolType {
     INJECTABLE,
     PAIR,
     TAG,
+    MODULE,
+    CONST
 
 }

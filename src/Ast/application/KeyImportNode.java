@@ -2,21 +2,15 @@ package Ast.application;
 
 import Ast.Node;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class KeyImportNode extends Node {
- String Idintifire;
+    private final String key;
 
-    public KeyImportNode(String idintifire) {
-        Idintifire = idintifire;
+    public KeyImportNode(String key) {
+        this.key = key;
     }
 
-    @Override
-    public String toString() {
-        return "KeyImportNode{" +
-                "Idintifire=" + Idintifire +
-                '}';
+    public String getKey() {
+        return key;
     }
 
     @Override
@@ -24,4 +18,10 @@ public class KeyImportNode extends Node {
         visitor.accept(this);
     }
 
+    @Override
+    public String toString() {
+        return "KeyImportNode{" +
+                "key='" + key + '\'' +
+                '}';
+    }
 }

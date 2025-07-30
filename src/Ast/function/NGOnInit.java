@@ -1,26 +1,37 @@
 package Ast.function;
 
 import Ast.Node;
-import Ast.expressions.ExpressionNode;
+import java.util.List;
 
 public class NGOnInit extends Node {
-String fun;
+    private String functionName;
+    private String returnType;
+    private List<Node> bodyStatements;
 
-ExpressionNode expressionNode;
-String isvoid;
+    public NGOnInit(String functionName, String returnType, List<Node> bodyStatements) {
+        this.functionName = functionName;
+        this.returnType = returnType;
+        this.bodyStatements = bodyStatements;
+    }
 
-    public NGOnInit(String fun, ExpressionNode expressionNode, String isvoid) {
-        this.fun = fun;
-        this.expressionNode = expressionNode;
-        this.isvoid = isvoid;
+    public String getFunctionName() {
+        return functionName;
+    }
+
+    public String getReturnType() {
+        return returnType;
+    }
+
+    public List<Node> getBodyStatements() {
+        return bodyStatements;
     }
 
     @Override
     public String toString() {
         return "NGOnInit{" +
-                "fun='" + fun + '\'' +
-                ", expressionNode=" + expressionNode +
-                ", isvoid='" + isvoid + '\'' +
+                "functionName='" + functionName + '\'' +
+                ", returnType='" + returnType + '\'' +
+                ", bodyStatements=" + bodyStatements +
                 '}';
     }
 

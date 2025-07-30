@@ -1,0 +1,78 @@
+import { Component } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ProductService } from '../product.service';
+import { Router } from '@angular/router';
+
+
+@Component({
+  selector: 'app-product-add',
+ template: `<form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+         <div class="form-group">
+           <label>اسم المنتج</label>
+           <input type="text" formControlName="name" class="form-control" placeholder="اسم المنتج">
+         </div>
+         <div class="form-group">
+           <label>السعر</label>
+           <input type="number" formControlName="price" class="form-control" placeholder="السعر">
+         </div>
+         <div class="form-group">
+           <label>التفاصيل</label>
+           <textarea formControlName="details" class="form-control" placeholder="التفاصيل"></textarea>
+         </div>
+         <div class="form-group">
+           <label>رابط الصورة</label>
+           <input type="text" formControlName="image" class="form-control" placeholder="رابط الصورة">
+         </div>
+         <button type="submit" class="btn btn-primary">حفظ</button>
+       </form>
+  `,
+     styleUrls:[`
+    .container {
+      width: 100px;
+      height: 200px;
+      background-color: #f5f5f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #main-title {
+      font-size: 24px;
+      color: #333;
+      text-align: center;
+    }
+
+    .button-primary:hover {
+      background-color: #007bff;
+      color: white;
+      transform: scale(1.05);
+    }
+  `]
+
+})
+export class ProductAddComponent {
+  productForm = new FormGroup({
+    name: new FormControl('', Validators.required),
+    price: new FormControl('', [Validators.required, Validators.min(0)]),
+    details: new FormControl(''),
+    image: new FormControl('')
+  });
+
+  constructor(
+    private productService: ProductService,
+    private router: Router
+  ) {}
+
+
+  constructor(
+    private productService: ProductService,
+    private router: Router
+  ) {}
+
+  onSubmit() {
+    if (this.productForm.valid) {
+      this.productService.addProduct(this.productForm.value);
+      this.router.navigate(['/']);
+    }
+  }
+}

@@ -1,0 +1,60 @@
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ProductService {
+  private productsSubject = new BehaviorSubject<any[]>(this.getInitialProducts());
+
+  products$ = this.productsSubject.asObservable();
+
+  private getInitialProducts() {
+    return [
+      { id: 1, name: 'منتج 1', price: 100 },
+      { id: 2, name: 'منتج 2', price: 200 },
+      { id: 3, name: 'منتج 3', price: 300 }
+    ];
+  }
+
+  getProducts() {
+    return this.productsSubject.value;
+  }
+
+  addProduct(product: any) {
+    const current = this.productsSubject.value;
+    this.productsSubject.next([current, product]);
+  }
+
+  deleteProduct(id: number) {
+    const updated = this.productsSubject.value.filter(p => p.id !== id);
+    this.productsSubject.next(updated);
+  }
+}
+
+
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ProductService {
+
+    private productsSubject = new BehaviorSubject<any[]>(this.getInitialProducts());
+  products$ = this.productsSubject.asObservable();
+
+  addProduct(product: any) {
+    const current = this.productsSubject.value;
+    this.productsSubject.next([...current, { ...product, id: Date.now() }]);
+  }
+
+  deleteProduct(id: number) {
+    const updated = this.productsSubject.value.filter(p => p.id !== id);
+    this.productsSubject.next(updated);
+  }
+
+  getProductById(id: number) {
+    return this.productsSubject.value.find(p => p.id === id);
+  }
+}

@@ -17,9 +17,13 @@ public abstract  class HtmlAttributeNode extends Node {
 
     }
 
+    public String getName() {
+        return name;
+    }
 
-
-
+    public String getValue() {
+        return value;
+    }
 
     @Override
     public void accept(Node visitor) {

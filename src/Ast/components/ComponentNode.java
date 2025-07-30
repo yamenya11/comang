@@ -1,5 +1,6 @@
 package Ast.components;
 
+import Ast.ClassBodyNode;
 import Ast.Node;
 import Ast.metadata.MetadataEntryNode;
 import Ast.metadata.MetadataNode;
@@ -43,4 +44,6 @@ public class ComponentNode extends Node {
     public void accept(Node visitor) {
         visitor.accept(this);
     }
+
+
 }

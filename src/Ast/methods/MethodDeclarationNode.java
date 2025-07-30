@@ -6,58 +6,41 @@ import Ast.statements.StatementNode;
 import java.util.List;
 
 public class MethodDeclarationNode extends Node {
-    private String name;
-    private List<ParameterNode> parameters;
-    private List<StatementNode> body;
-    private String returnType;  //
+    private final String methodName;
+    private final List<ParameterNode> parameters;
+    private final String returnType;
+    private final List<StatementNode> body;
 
-    public MethodDeclarationNode(String name, List<ParameterNode> parameters, List<StatementNode> body, String returnType) {
-        this.name = name;
+    public MethodDeclarationNode(String methodName, List<ParameterNode> parameters, String returnType, List<StatementNode> body) {
+        this.methodName = methodName;
         this.parameters = parameters;
-        this.body = body;
         this.returnType = returnType;
+        this.body = body;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public String getMethodName() {
+        return methodName;
     }
 
     public List<ParameterNode> getParameters() {
         return parameters;
     }
 
-    public void setParameters(List<ParameterNode> parameters) {
-        this.parameters = parameters;
+    public String getReturnType() {
+        return returnType;
     }
 
     public List<StatementNode> getBody() {
         return body;
     }
 
-    public void setBody(List<StatementNode> body) {
-        this.body = body;
-    }
-
-    public String getReturnType() {
-        return returnType;  // getter لنوع الإرجاع
-    }
-
-    public void setReturnType(String returnType) {
-        this.returnType = returnType;  // setter لنوع الإرجاع
-    }
-
-    // toString
     @Override
     public String toString() {
         return "MethodDeclarationNode{" +
-                "name='" + name + '\'' +
+                "methodName='" + methodName + '\'' +
                 ", parameters=" + parameters +
+                ", returnType='" + returnType + '\'' +
                 ", body=" + body +
-                ", returnType='" + returnType + '\'' +  // طباعة نوع الإرجاع
                 '}';
     }
 

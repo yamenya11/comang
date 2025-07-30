@@ -5,56 +5,28 @@
         private SymbolType type;
         private String value;
         private String scope;
+        private String sourceFile;
 
 
-
-        public SymbolEntry(String name, SymbolType type, String value ,String scope) {
+        public SymbolEntry(String name, SymbolType type, String value, String scope, String sourceFile) {
             this.name = name;
             this.type = type;
             this.value = value;
             this.scope = scope;
-
+            this.sourceFile = sourceFile;
         }
+        public String getName() { return name; }
+        public SymbolType getType() { return type; }
+        public String getValue() { return value; }
+        public String getScope() { return scope; }
+        public String getSourceFile() { return sourceFile; }
 
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-
-
-
-        public SymbolType getType() {
-            return type;
-        }
-
-        public void setType(SymbolType type) {
-            this.type = type;
-        }
-
-        public String getValue() {
-            return value;
-        }
-
-        public void setValue(String value) {
-            this.value = value;
-        }
-        public String getScope() {
-            return scope;
-        }
-
-        public void setScope(String scope) {
-            this.scope = scope;
-        }
+        public void setScope(String scope) { this.scope = scope; }
+        public void setSourceFile(String sourceFile) { this.sourceFile = sourceFile; }
         @Override
         public String toString() {
-            return String.format(
-                    "Name: %-15s | Type: %-12s | Value: %-20s | Scope: %-10s",
-                    name, type, value == null ? "null" : value, scope
-            );
+            return String.format("%-15s | %-12s | %-20s | %-30s | %-20s",
+                    name, type, value, scope, sourceFile);
         }
 
     }

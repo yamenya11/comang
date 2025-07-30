@@ -42,7 +42,7 @@ public class ImportStatementNode extends Node {
                 "imported='" + imported + '\'' +
                 ", source='" + source + '\'' +
                 ", key='" + key + '\'' +
-                ", app=" + app +
+                ", app=" +'{'+ app+'}' +
                 '}';
     }
 

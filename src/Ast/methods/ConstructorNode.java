@@ -9,12 +9,13 @@ public class ConstructorNode extends Node {
     private String name;
     private List<Node> parameters;
     private List<Node> statements;
+    private List<Node> serviceAssignment;
 
-
-    public ConstructorNode(String name, List<Node>  parameters, List<Node>  statements) {
+    public ConstructorNode(String name, List<Node> parameters, List<Node> statements, List<Node> serviceAssignment) {
         this.name = name;
         this.parameters = parameters;
         this.statements = statements;
+        this.serviceAssignment = serviceAssignment;
     }
 
     public String getName() {
@@ -52,6 +53,9 @@ public class ConstructorNode extends Node {
         }
         sb.append("  statements:\n");
         for (Node stmt : statements) {
+            sb.append("    ").append(stmt).append("\n");
+        }  sb.append("  serviceAssignment:\n");
+        for (Node stmt : serviceAssignment) {
             sb.append("    ").append(stmt).append("\n");
         }
         sb.append("}");

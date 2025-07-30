@@ -7,6 +7,7 @@ public class StrictEqualityNode  extends ExpressionNode {
     private ExpressionNode right;
 
     public StrictEqualityNode(ExpressionNode left, ExpressionNode right) {
+        super();
         this.left = left;
         this.right = right;
     }

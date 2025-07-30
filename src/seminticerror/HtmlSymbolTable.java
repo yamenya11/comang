@@ -12,9 +12,11 @@ public class HtmlSymbolTable {
     private final Map<String, SymbolEntry> tagSymbols = new HashMap<>();
     private final List<SymbolEntry> symbols = new ArrayList<>();
 
+
     public boolean symbolExists(String tagValue) {
         return tagSymbols.containsKey(tagValue);
     }
+
 
     public void addSymbol(SymbolEntry entry) {
         if (entry.getType() == SymbolType.TAG) {
@@ -28,9 +30,11 @@ public class HtmlSymbolTable {
                 .anyMatch(entry -> entry.getType() == SymbolType.TAG && entry.getValue().equals(tagHtml));
     }
 
+
     public SymbolEntry getSymbol(String tagValue) {
         return tagSymbols.get(tagValue);
     }
+
 
     public List<SymbolEntry> getSymbols() {
         return symbols;

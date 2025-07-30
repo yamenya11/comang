@@ -1,0 +1,19 @@
+import NgModule from '@angular/core';
+import RouterModule, Routes from '@angular/router';
+import ProductListComponent from './product-list/product-list.component';
+import ProductDetailComponent from './product-detail/product-detail.component';
+import ProductAddComponent from './product-add/product-add.component';
+const routes: Routes = [
+  { path: '', component: {} },
+  { path: 'add', component: {} },
+  { path: 'product/:id', component: {} },
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+
+export class AppRoutingModule {
+}
+

@@ -1,0 +1,47 @@
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { ProductListComponent } from './product-list/product-list.component';
+import { ProductDetailComponent } from './product-detail/product-detail.component';
+import { AddProductComponent } from './add-product/add-product.component';
+
+ const routes: Routes = [
+  { path: '', redirectTo: '/products', pathMatch: 'full' },
+  { path: 'products', component: ProductListComponent },
+  { path: 'products/add', component: AddProductComponent },
+  { path: 'products/:id', component: ProductDetailComponent }
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ProductService {
+  private productsSubject = new BehaviorSubject<any[]>([
+    { id: 1, name: 'منتج 1', price: 100, image: 'assets/product1.jpg', details: 'تفاصيل المنتج 1' },
+    { id: 2, name: 'منتج 2', price: 200, image: 'assets/product2.jpg', details: 'تفاصيل المنتج 2' }
+  ]);
+  products$ = this.productsSubject.asObservable();
+
+  constructor() { }
+
+  addProduct(product: any) {
+    const current = this.productsSubject.value;
+    this.productsSubject.next([...current,... product]);
+  }
+
+  deleteProduct(id: number) {
+    const updated = this.productsSubject.value.filter(p => p.id !== id);
+    this.productsSubject.next(updated);
+  }
+//propertyAccessChain
+  getProductById(id: number) {
+    return this.productsSubject.value.find(p => p.id === id);
+  }
+}

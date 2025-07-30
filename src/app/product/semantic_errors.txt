@@ -1,5 +1,18 @@
+Semantic Error at line 42, column 0: Duplicate class definition: ProductService
+Semantic Error at line 10, column 4: Tag <form> is not recognized as a valid HTML tag.
+Semantic Error at line 28, column 4: The class or service 'ProductService' is used without importing it.
+Semantic Error at line 29, column 4: The class or service 'Router' is used without importing it.
+Semantic Error at line 34, column 4: The class or service 'ProductService' is used without importing it.
+Semantic Error at line 35, column 4: The class or service 'Router' is used without importing it.
+Semantic Error at line 6, column 4: Mismatched HTML tags: <h2> closed with </p>
+Semantic Error at line 9, column 6: Mismatched HTML tags: <img> closed with </p>
+Semantic Error at line 10, column 6: Mismatched HTML tags: <h2> closed with </p>
+Semantic Error at line 21, column 4: The class or service 'ActivatedRoute' is used without importing it.
+Semantic Error at line 22, column 4: The class or service 'ProductService' is used without importing it.
 Semantic Error at line 9, column 2: Invalid selector value: '99hello'. Selector must start with a letter or underscore and contain only alphanumeric characters, underscores or hyphens.
-Semantic Error at line 34, column 15: Mismatched fixed HTML tags: <h1> closed with </p>
-Semantic Error at line 35, column 17: Tag <v> is not recognized as a valid fixed HTML tag.
-Semantic Error at line 50, column 12: The class or service 'ProductService' is used without importing it.
-Semantic Error at line 72, column 1: Duplicate class definition: AppComponent
+Semantic Error at line 13, column 15: Mismatched HTML tags: <h1> closed with </p>
+Semantic Error at line 14, column 17: Mismatched HTML tags: <v> closed with </p>
+Semantic Error at line 14, column 17: Tag <v> is not recognized as a valid HTML tag.
+Semantic Error at line 15, column 17: Mismatched HTML tags: <button> closed with </h1>
+Semantic Error at line 26, column 0: Duplicate class definition: AppComponent
+Semantic Error at line 54, column 1: Duplicate class definition: AppComponent

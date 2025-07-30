@@ -9,6 +9,11 @@ public class RegularPropertyNode extends PropertyDeclarationNode{
         super(name, type);
         this.initializer = initializer;
     }
+
+    public ExpressionNode getInitializer() {
+        return initializer;
+    }
+
     @Override
     public String toString() {
         return "RegularProperty{" +

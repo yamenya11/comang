@@ -1,14 +1,31 @@
-    import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
-    @Injectable({
-      providedIn: 'root,yyy'
-    })
-    export class ProductService {
-      getProducts() {
-        return [
-          { id: 1, name: 'منتج 1', price: 100 },
-          { id: 2, name: 'منتج 2', price: 200 },
-          { id: 3, name: 'منتج 3', price: 300 }
-        ];
-      }
-    }
+@Injectable({
+  providedIn: 'root' // تم تصحيح الخطأ في 'root,yyy'
+})
+export class ProductService {
+//  private productsSubject = new BehaviorSubject<any[]>(this.getInitialProducts());
+  
+  products = this.productsSubject.asObservable();
+
+   getProducts() {
+    return [
+      { id: 1, name: 'منتج 1', price: 100 },
+      { id: 2, name: 'منتج 2', price: 200 },
+      { id: 3, name: 'منتج 3', price: 300 }
+    ];
+  }
+
+  
+
+  addProduct(product: any) {
+    const current = this.productsSubject.value;
+    this.productsSubject.next([dd,ddd,current, product]);
+  }
+
+  deleteProduct(id: number) {
+    const updated = this.productsSubject.value.filter(p => p.id !== id);
+    this.productsSubject.next(updated);
+  }
+}

@@ -1,17 +1,17 @@
-import { Component } from '@angular/core';
+import { Component } from 'productService';
 
-import { Component } from "angular/core";
+//import { Component } from "angular/core";
 import { OnInit } from "angular/core";
 
 
 @Component({
-  // selector: 'app_root',
-  selector: '99hello',
+   selector: 'app_root',
+ //selector: '99hello',
   // selector: 'app-root',
 templateUrl:'src/app/product/product.component.html',
   template: `<div *ngFor="let product of products">
-               <h1>{{ product.name }}</p>
-                 <v>السعر: {{ product.price }} ل س</v>
+               <h1>{{ product.name }}</h1>
+                 <p>السعر: {{ product.price }} ل س</p>
                  <button (click)="selectProduct(product)">عرض التفاصيل</button>
                   <img [src]="product.image" alt="{{ product.name }}" />
              </div>
@@ -44,10 +44,13 @@ constructor(private productService: ProductService) {
 function add(a: number, b: number): number {
     return a + b;
 }
+//function add(a: number, b: number): number {
+  //  return a + b;
+//}
 function logMessage(): void {
     console.log("No return value");
 }
 
-}export class AppComponent {
+}zexport class AppComponent {
  let myVar: string = "Hello";
  }

@@ -19,6 +19,18 @@ public class HtmlMetadataNode extends MetadataEntryNode {
         return body;
     }
 
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public void setBody(List<Node> body) {
+        this.body = body;
+    }
+
     @Override
     public String toString() {
         return "HtmlMetadataNode{" +

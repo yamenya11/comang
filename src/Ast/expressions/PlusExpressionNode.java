@@ -12,6 +12,7 @@ public class PlusExpressionNode extends ExpressionNode{
 
     @Override
     public void accept(Node visitor) {
+        visitor.accept(this);
     }
     @Override
     public String toString() {

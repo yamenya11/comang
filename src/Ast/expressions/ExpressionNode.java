@@ -6,11 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class ExpressionNode extends Node {
+
     protected List<ExpressionNode> expressions;
     public ExpressionNode() {
         this.expressions = new ArrayList<>();
     }
-
     public void addExpression(ExpressionNode expression) {
         expressions.add(expression);
     }
